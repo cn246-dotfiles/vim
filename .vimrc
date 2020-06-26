@@ -6,17 +6,21 @@ endif
 
 " Use vim-plug for plugins.
 call plug#begin('~/.vim/plugged')
+Plug 'arcticicestudio/nord-vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'mattn/emmet-vim'
 " Plug 'pearofducks/ansible-vim'
 " Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'w0rp/ale'
 call plug#end()
 
 "------------------------------------------------------------
+" 
+" Apply the nord colorscheme
+colorscheme nord
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
@@ -177,4 +181,3 @@ if has('viminfo')
         augroup END
     endif
 endif
-
