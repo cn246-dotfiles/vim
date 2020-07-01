@@ -9,8 +9,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'arcticicestudio/nord-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'mattn/emmet-vim'
-" Plug 'pearofducks/ansible-vim'
-" Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -18,7 +16,14 @@ Plug 'tpope/vim-surround'
 call plug#end()
 
 "------------------------------------------------------------
-" 
+"
+" Lighten nord comment color
+"augroup nord-theme-overrides
+"  autocmd!
+"  " Change foreground color for Vim comments.
+"  autocmd ColorScheme nord highlight vimComment ctermfg=242 guifg=#6c6c6c
+"augroup END
+
 " Apply the nord colorscheme
 colorscheme nord
 
@@ -118,7 +123,13 @@ set cmdheight=2
  
 " Display line numbers on the left
 set relativenumber
- 
+
+" Highlight line 80
+set colorcolumn=80
+
+" Highlight current line
+set cursorline
+
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
  
