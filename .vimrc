@@ -1,3 +1,4 @@
+" Vim-Plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -8,7 +9,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'arcticicestudio/nord-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-" Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -16,7 +17,8 @@ Plug 'tpope/vim-surround'
 call plug#end()
 
 "------------------------------------------------------------
-"
+" Colorscheme
+
 " Lighten nord comment color
 "augroup nord-theme-overrides
 "  autocmd!
@@ -27,10 +29,8 @@ call plug#end()
 " Apply the nord colorscheme
 colorscheme nord
 
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
-filetype indent plugin on
+"------------------------------------------------------------
+"
  
 " Enable syntax highlighting
 syntax on
@@ -38,28 +38,8 @@ syntax on
 " Enable Omni Completion
 set omnifunc=syntaxcomplete#Complete
  
-"------------------------------------------------------------
- 
-" Vim with default settings does not allow easy switching between multiple files
-" in the same editor window. Users can use multiple split windows or multiple
-" tab pages to edit multiple files, but it is still best to enable an option to
-" allow easier switching between files.
-"
-" One such option is the 'hidden' option, which allows you to re-use the same
-" window and switch from an unsaved buffer without saving it first. Also allows
-" you to keep an undo history for multiple files when re-using the same window
-" in this way. Note that using persistent undo also lets you undo in multiple
-" files even in the same window, but is less efficient and is actually designed
-" for keeping undo history after closing Vim entirely. Vim will complain if you
-" try to quit without saving, and swap files will keep you safe if your computer
-" crashes.
+" Re-use the same window and switch from an unsaved buffer without saving first.
 set hidden
- 
-" Note that not everyone likes working this way (with the hidden option).
-" Alternatives include using tabs or split windows instead of re-using the same
-" window as mentioned above, and/or either of the following options:
-" set confirm
-" set autowriteall
  
 " Better command-line completion
 set wildmenu
@@ -67,18 +47,12 @@ set wildmenu
 " Show partial commands in the last line of the screen
 set showcmd
  
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
+" Highlight searches (use <C-L> to temporarily turn off highlighting)
 set hlsearch
- 
-" Modelines have historically been a source of security vulnerabilities. As
-" such, it may be a good idea to disable them and use the securemodelines
-" script, <http://www.vim.org/scripts/script.php?script_id=1876>.
-" set nomodeline
- 
- 
-"------------------------------------------------------------
- 
+
+" Highlight as you type a search term
+set incsearch
+
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
@@ -86,13 +60,7 @@ set smartcase
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
  
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
-set autoindent
- 
 " Stop certain movements from always going to the first character of a line.
-" While this behaviour deviates from that of Vi, it does what most users
-" coming from other editors would expect.
 set nostartofline
  
 " Display the cursor position on the last line of the screen or in the status
@@ -102,29 +70,26 @@ set ruler
 " Always display the status line, even if only one window is displayed
 set laststatus=2
  
-" Instead of failing a command because of unsaved changes, instead raise a
-" dialogue asking if you wish to save changed files.
+" Ask if you wish to save changed files.
 set confirm
  
 " Use visual bell instead of beeping when doing something wrong
 set visualbell
  
-" And reset the terminal code for the visual bell. If visualbell is set, and
-" this line is also included, vim will neither flash nor beep. If visualbell
-" is unset, this does nothing.
+" If visualbell is set, and this line is also included, vim will neither flash
+" nor beep. If visualbell is unset, this does nothing.
 set t_vb=
  
 " Enable use of the mouse for all modes
 set mouse=a
  
-" Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
+" Set the command window height to 2 lines
 set cmdheight=2
  
-" Display line numbers on the left
+" Display line numbers on the left counting away from cursor position
 set relativenumber
 
-" Highlight line 80
+" Highlight column 80
 set colorcolumn=80
 
 " Highlight current line
@@ -136,25 +101,72 @@ set notimeout ttimeout ttimeoutlen=200
 " Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
  
+" Folding
+set foldmethod=indent
+set foldlevel=99
+
 "------------------------------------------------------------
-" Indentation options {{{1
-"
+" File Browsing
+
+" Don't show text at top of file tree
+let g:netrw_banner=0
+
+" Open in same buffer as existing file
+let g:netrw_browse_split=4
+
+" Set file tree at 20% of window width
+let g:netrw_winsize=20
+
+"------------------------------------------------------------
+" Key Mappings
+
+" Turn off search highlighting until the next search
+nnoremap <C-L> :nohl<CR><C-L>
+
+" Set leader as spacebar
+let mapleader=" "
+
+" Move between splits with <space>+[h,j,k,l]
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+
+" Code folding
+" nnoremap <leader> z
+
+" Open file browser with <space>+pv
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
+
+"------------------------------------------------------------
+" Indentation
+
+" Disable modeline
+"set nomodeline
+ 
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype indent plugin on
+
+" When opening a new line and no filetype-specific indenting is enabled, keep
+" the same indent as the line you're currently on. Useful for READMEs, etc.
+set autoindent
  
 " Indentation settings for using 4 spaces instead of tabs.
 set shiftwidth=4
 set softtabstop=4
 set expandtab
- 
+
+" Flag unnecessary whitespace
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
 "------------------------------------------------------------
-"
 " Prevent various Vim features from keeping the contents of pass(1) password
 " files (or any other purely temporary files) in plaintext on the system.
 "
-" Either append this to the end of your .vimrc, or install it as a plugin with
-" a plugin manager like Tim Pope's Pathogen.
-"
 " Author: Tom Ryder <tom@sanctum.geek.nz>
-"
 
 " Don't backup files in temp directories or shm
 if exists('&backupskip')
