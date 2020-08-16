@@ -13,7 +13,7 @@ Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 call plug#end()
 
 " Enable matchit
