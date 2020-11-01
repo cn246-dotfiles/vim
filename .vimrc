@@ -151,6 +151,7 @@ nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
 
 " Disable modeline
 "set nomodeline
+set modeline
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
