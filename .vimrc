@@ -73,6 +73,19 @@ set ruler
 " Always display the status line, even if only one window is displayed
 set laststatus=2
 
+" Configure statusline
+"set statusline=%.40F                   " Full file path (40 char max)
+set statusline=%f                       " Full file path (40 char max)
+set statusline+=\ %{FugitiveStatusline()}
+set statusline+=\ %m                    " Modified flag
+set statusline+=%*                      " Restore default highlight
+set statusline+=%=                      " Split the left and right sides
+set statusline+=%l,                     " Line number
+set statusline+=\                       " A space
+set statusline+=%3c                     " Column number
+set statusline+=\ \|\                   " A separator
+set statusline+=%L                      " Total number of lines
+
 " Ask if you wish to save changed files.
 set confirm
 
@@ -152,6 +165,7 @@ nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
 " Disable modeline
 "set nomodeline
 set modeline
+set modelines=3
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
