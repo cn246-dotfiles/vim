@@ -185,6 +185,9 @@ set expandtab
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
+" Filetype for calcurse
+autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes* set filetype=markdown
+
 "------------------------------------------------------------
 " Prevent various Vim features from keeping the contents of pass(1) password
 " files (or any other purely temporary files) in plaintext on the system.
