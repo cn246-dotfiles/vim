@@ -189,6 +189,16 @@ au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes* set filetype=markdown
 
 "------------------------------------------------------------
+" Whitespace
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+:noremap <leader>w :call TrimWhitespace()<CR>
+
+"------------------------------------------------------------
 " Prevent various Vim features from keeping the contents of pass(1) password
 " files (or any other purely temporary files) in plaintext on the system.
 "
