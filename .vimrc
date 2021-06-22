@@ -66,6 +66,9 @@ set backspace=indent,eol,start
 " Stop certain movements from always going to the first character of a line.
 set nostartofline
 
+" Paste mode
+set paste
+
 " Display the cursor position on the last line of the screen or in the status
 " line of a window
 set ruler
