@@ -23,11 +23,13 @@ runtime macros/matchit.vim
 " Colorscheme
 
 " Lighten nord comment color
-"augroup nord-theme-overrides
-"  autocmd!
-"  " Change foreground color for Vim comments.
-"  autocmd ColorScheme nord highlight vimComment ctermfg=242 guifg=#6c6c6c
-"augroup END
+augroup nord-theme-overrides
+  autocmd!
+  " Change foreground color for Vim comments.
+  autocmd ColorScheme nord highlight vimComment ctermfg=244 guifg=#6c6c6c
+  autocmd ColorScheme nord highlight Visual ctermbg=235 guifg=#6c6c6c
+  autocmd ColorScheme nord highlight CursorLine ctermbg=234 guifg=#6c6c6c
+augroup END
 
 " Apply the nord colorscheme
 colorscheme nord
@@ -164,6 +166,9 @@ vnoremap <leader>p "+p
 
 " Open file browser with <space>+pv
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
+
+" Save and run last command
+nnoremap <leader>r :w<CR>:!!<CR>
 
 "------------------------------------------------------------
 " Indentation
