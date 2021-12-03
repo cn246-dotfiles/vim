@@ -26,7 +26,7 @@ runtime macros/matchit.vim
 augroup nord-theme-overrides
   autocmd!
   " Change foreground color for Vim comments.
-  autocmd ColorScheme nord highlight vimComment ctermfg=244 guifg=#6c6c6c
+  autocmd ColorScheme nord highlight vimComment ctermfg=247 guifg=#6c6c6c
   autocmd ColorScheme nord highlight Visual ctermbg=235 guifg=#6c6c6c
   autocmd ColorScheme nord highlight CursorLine ctermbg=234 guifg=#6c6c6c
 augroup END
@@ -209,9 +209,10 @@ endfun
 
 :noremap <leader>w :call TrimWhitespace()<CR>
 
+"------------------------------------------------------------
 " Linux and other UNIX-like systems (requires curl and xclip)
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
-" -----------------------------------------------------------
+
 command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us | tr -d '\n' | xclip -i -selection clipboard
 command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com | tr -d '\n' | xclip -i -selection clipboard
 command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net | tr -d '\n' | xclip -i -selection clipboard
