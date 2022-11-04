@@ -1,20 +1,5 @@
 "------------------------------------------------------------
-" Table of Contents
-"------------------------------------------------------------
-" 01 - Vim-Plug
-" 02 - Colorscheme
-" 03 - General
-" 04 - File Browsing
-" 05 - Indentation
-" 06 - Keyboard & Mouse
-" 07 - Search
-" 08 - Undo
-" 09 - Visual Helpers & Statusline
-" 10 - Whitespace
-" 11 - Pastebins
-
-"------------------------------------------------------------
-" 01 - Vim-Plug
+" Plugins
 "------------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -31,6 +16,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug '~/.vim/plugged/vim-redact-pass'
+Plug 'vim-scripts/AutoComplPop'
 "Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 "Plug 'mattn/calendar-vim'
 "Plug 'mattn/emmet-vim'
@@ -41,7 +27,7 @@ call plug#end()
 runtime macros/matchit.vim
 
 "------------------------------------------------------------
-" 02 - Colorscheme
+" Colorscheme
 "------------------------------------------------------------
 " Set colorscheme
 if $SSH_CONNECTION
@@ -84,79 +70,86 @@ augroup defaultColors
 augroup END
 
 "------------------------------------------------------------
-" 03 - General
+" General
 "------------------------------------------------------------
-" Set utf8 as standard encoding
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-" Enable syntax highlighting
-syntax on
-
-" Enable Omni Completion
-set omnifunc=syntaxcomplete#Complete
-
-" Re-use the same window and switch from an unsaved buffer without saving first
-set hidden
-
-" Allow backspacing over autoindent, line breaks and start of insert action
-set backspace=indent,eol,start
-
-" Stop certain movements from always going to the first character of a line
-set nostartofline
-
-" Ask if you wish to save changed files.
-set confirm
-
-" Use visual bell instead of beeping when doing something wrong
-set visualbell
-
-" If visualbell is set & this line is included, vim will neither flash nor beep
-set t_vb=
-
-" Quickly time out on keycodes, but never time out on mappings
-set notimeout ttimeout ttimeoutlen=200
+filetype indent plugin on              " Guess filetype based on name & contents
+set autoindent                         " Keep same indent as the line you're on
+set backspace=indent,eol,start         " Backspace over indent, eol and start
+set complete+=kspell                   " Set matches for completion
+set completeopt=menuone,longest        " Options for completion
+set confirm                            " Ask to save changed files
+set encoding=utf8                      " Set utf8 as standard encoding
+set expandtab                          " Use spaces instead of tabs
+set ffs=unix,dos,mac                   " Set Unix as standard file type
+set hidden                             " Switch buffers without saving first
+set hlsearch                           " Highlight searches
+set ignorecase                         " Use case insensitive search
+set incsearch                          " Highlight as you type a search term
+set modeline                           " Enable modeline
+set modelines=3                        " Bottom 3 lines for modeline
+set nospell                            " Disable spellcheck
+set nostartofline                      " Stop going to first character of line
+set notimeout ttimeout ttimeoutlen=200 " Time out on keycodes, but not mappings
+set omnifunc=syntaxcomplete#Complete   " Enable Omni Completion
+set shiftwidth=2                       " Set column number for indentation
+set shortmess+=c                       " Avoid some error messages
+set smartcase                          " Except when using capital letters
+set softtabstop=2                      " Use 2 spaces instead of tabs
+set spelllang=en_us                    " Set spellcheck to en_us
+set splitbelow                         " Send splits to bottom
+set splitright                         " Send splits to right
+set t_vb=                              " Neither flash nor beep
+set visualbell                         " Visual bell instead of beeping
+syntax on                              " Enable syntax highlighting
 
 "------------------------------------------------------------
-" 04 - File Browsing
+" Visual Helpers
 "------------------------------------------------------------
-" Don't show text at top of file tree
-let g:netrw_banner=0
-
-" Open in same buffer as existing file
-let g:netrw_browse_split=4
-
-" Set file tree at 25% of window width
-let g:netrw_winsize=25
-
-"------------------------------------------------------------
-" 05 - Indentation
-"------------------------------------------------------------
-" Enable modeline
-set modeline
-set modelines=3
-
-" Attempt to determine the type of a file based on its name and its contents
-filetype indent plugin on
-
-" Keep the same indent as the line you're currently on
-set autoindent
-
-" Use 2 spaces instead of tabs
-set shiftwidth=2
-set softtabstop=2
-set expandtab
+set cmdheight=2                        " Set command window height to 2 lines
+set colorcolumn=80                     " Highlight column 80
+set cursorline                         " Highlight current line
+set foldmethod=manual                  " Fold method
+set laststatus=2                       " Always display the status line
+set list                               " Mark whitespace and tabs, etc.
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set nofoldenable                       " Don't fold initially
+set relativenumber                     " line numbers counting away from cursor
+set ruler                              " Cursor position in the status line
+set showcmd                            " Show commands in last line of screen
+set wildmenu                           " Better command-line completion
+set wildmode=list,longest              " Completion mode
 
 "------------------------------------------------------------
-" 06 - Keyboard & Mouse
+" Statusline
 "------------------------------------------------------------
+set statusline=%f                         " Filepath
+set statusline+=\                         " A space
+set statusline+=%y                        " Filetype
+set statusline+=\ %{FugitiveStatusline()} " Current branch & edited file's commit
+set statusline+=\ %m                      " Modified flag
+set statusline+=%*                        " Restore default highlight
+set statusline+=%=                        " Split the left and right sides
+set statusline+=%l,                       " Line number
+set statusline+=\                         " A space
+set statusline+=%3c                       " Column number
+set statusline+=\ \|\                     " A separator
+set statusline+=%L                        " Total number of lines
+
+"------------------------------------------------------------
+" File Browsing
+"------------------------------------------------------------
+let g:netrw_banner=0                   " Don't show text at top of file tree
+let g:netrw_browse_split=4             " Open in same buffer as existing file
+let g:netrw_winsize=25                 " Set file tree at 25% of window width
+
+"------------------------------------------------------------
+" Keyboard & Mouse
+"------------------------------------------------------------
+" Set leader to spacebar
+let mapleader=" "
+
 " Enable use of the mouse for all modes
 set mouse=a
-
-" Set leader as spacebar
-let mapleader=" "
 
 " Show contents of buffers
 nnoremap <leader>b :buffers<CR>:buffer<Space>
@@ -179,27 +172,20 @@ nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
 " Save and run last command
 nnoremap <leader>r :w<CR>:!!<CR>
 
+"" Source Vim config file.
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
 " Turn off search highlighting until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
-" Use <F11> to toggle between 'paste' and 'nopaste'
+" Toggle spell check.
+nnoremap <F5> :setlocal spell!<CR>
+
+" Use <F11> to toggle paste
 set pastetoggle=<F11>
 
 "------------------------------------------------------------
-" 07 - Search
-"------------------------------------------------------------
-" Highlight searches (use <C-L> to temporarily turn off highlighting)
-set hlsearch
-
-" Highlight as you type a search term
-set incsearch
-
-" Use case insensitive search, except when using capital letters
-set ignorecase
-set smartcase
-
-"------------------------------------------------------------
-" 08 - Undo
+" Undo
 "------------------------------------------------------------
 function Tmpwatch(path, days)
     let l:path = expand(a:path)
@@ -214,7 +200,6 @@ function Tmpwatch(path, days)
     endif
 endfunction
 
-" undofile part of your .vimrc
 if exists("+undofile")
     if !isdirectory($HOME . '/.vimundo')
         call mkdir($HOME . "/.vimundo", "", 0700)
@@ -229,57 +214,7 @@ if exists("+undofile")
 endif
 
 "------------------------------------------------------------
-" 09 - Visual Helpers & Statusline
-"------------------------------------------------------------
-" Mark whitespace and tabs, etc.
-set list
-set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
-
-" Folding
-set foldmethod=manual
-set nofoldenable
-
-" Show partial commands in the last line of the screen
-set showcmd
-
-" Display line numbers on the left counting away from cursor position
-set relativenumber
-
-" Highlight column 80
-set colorcolumn=80
-
-" Highlight current line
-set cursorline
-
-" Set the command window height to 2 lines
-set cmdheight=2
-
-" Better command-line completion
-set wildmenu
-set wildmode=list
-
-" Display cursor position in the status line
-set ruler
-
-" Always display the status line, even if only one window is displayed
-set laststatus=2
-
-" Configure statusline
-set statusline=%f                         " Filepath
-set statusline+=\                         " A space
-set statusline+=%y                        " Filetype
-set statusline+=\ %{FugitiveStatusline()} " Current branch & edited file's commit
-set statusline+=\ %m                      " Modified flag
-set statusline+=%*                        " Restore default highlight
-set statusline+=%=                        " Split the left and right sides
-set statusline+=%l,                       " Line number
-set statusline+=\                         " A space
-set statusline+=%3c                       " Column number
-set statusline+=\ \|\                     " A separator
-set statusline+=%L                        " Total number of lines
-
-"------------------------------------------------------------
-" 10 - Whitespace
+" Whitespace
 "------------------------------------------------------------
 function! TrimWhitespace()
     let l:save = winsaveview()
@@ -297,22 +232,7 @@ au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 " Pastebins
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
 "------------------------------------------------------------
-if has('osx')
-    command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
-      \| tr -d '\n' | pbcopy
-    command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
-      \| tr -d '\n' | pbcopy
-    command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
-      \| tr -d '\n' | pbcopy
-    command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1
-      \| tr -d '\n' | pbcopy
-    command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io
-      \| tr -d '\n' | pbcopy
-    command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
-      \| tr -d '\n' | pbcopy
-    command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
-      \| tr -d '\n' | pbcopy
-elseif has('linux')
+if has('linux')
     command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
       \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
@@ -327,6 +247,21 @@ elseif has('linux')
       \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
       \| tr -d '\n' | xclip -i -selection clipboard
+elseif has('osx')
+    command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
+      \| tr -d '\n' | pbcopy
+    command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
+      \| tr -d '\n' | pbcopy
+    command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
+      \| tr -d '\n' | pbcopy
+    command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1
+      \| tr -d '\n' | pbcopy
+    command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io
+      \| tr -d '\n' | pbcopy
+    command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
+      \| tr -d '\n' | pbcopy
+    command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
+      \| tr -d '\n' | pbcopy
 endif
 
 " vim: ft=vim ts=2 sts=2 sw=2 sr et
