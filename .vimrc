@@ -178,6 +178,10 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 " Turn off search highlighting until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+" Tab to cycle autocomplete selections
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
 " Toggle spell check.
 nnoremap <F5> :setlocal spell!<CR>
 
