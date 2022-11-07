@@ -233,6 +233,14 @@ highlight BadWhitespace ctermbg=red guibg=darkred
 au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "------------------------------------------------------------
+" Write as sudo
+"------------------------------------------------------------
+function! Sudow()
+     	:w !sudo tee % > /dev/null
+endfunction
+command! Sudow call Sudow()
+
+"------------------------------------------------------------
 " Pastebins
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
 "------------------------------------------------------------
