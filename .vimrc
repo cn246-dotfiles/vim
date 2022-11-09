@@ -185,6 +185,10 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 " Toggle spell check.
 nnoremap <F5> :setlocal spell!<CR>
 
+" Navigate ALE errors
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 " Use <F11> to toggle paste
 set pastetoggle=<F11>
 
