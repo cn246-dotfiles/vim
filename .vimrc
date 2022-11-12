@@ -169,9 +169,6 @@ vnoremap <leader>p "+p
 " Open file browser with <space>+pv
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
 
-" Save and run last command
-nnoremap <leader>r :w<CR>:!!<CR>
-
 "" Source Vim config file.
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
@@ -191,6 +188,38 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Use <F11> to toggle paste
 set pastetoggle=<F11>
+
+" Save and run last command
+nnoremap <leader>r :w<CR>:!!<CR>
+
+map <F5> :call CompileRun()<CR>
+imap <F5> <Esc>:call CompileRun()<CR>
+vmap <F5> <Esc>:call CompileRun()<CR>
+
+func! CompileRun()
+exec "w"
+if &filetype == 'c'
+    exec "!gcc % -o %<"
+    exec "!time ./%<"
+elseif &filetype == 'cpp'
+    exec "!g++ % -o %<"
+    exec "!time ./%<"
+elseif &filetype == 'java'
+    exec "!javac %"
+    exec "!time java %"
+elseif &filetype == 'sh'
+    exec "!time bash %"
+elseif &filetype == 'python'
+    exec "!time python3 %"
+elseif &filetype == 'html'
+    exec "!google-chrome % &"
+elseif &filetype == 'go'
+    exec "!go build %<"
+    exec "!time go run %"
+elseif &filetype == 'matlab'
+    exec "!time octave %"
+endif
+endfunc
 
 "------------------------------------------------------------
 " Undo
