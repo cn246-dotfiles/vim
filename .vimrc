@@ -129,11 +129,13 @@ set statusline+=\ %{FugitiveStatusline()} " Current branch & edited file's commi
 set statusline+=\ %m                      " Modified flag
 set statusline+=%*                        " Restore default highlight
 set statusline+=%=                        " Split the left and right sides
-set statusline+=%l,                       " Line number
-set statusline+=\                         " A space
 set statusline+=%3c                       " Column number
 set statusline+=\ \|\                     " A separator
-set statusline+=%L                        " Total number of lines
+set statusline+=\                         " A space
+set statusline+=%l/%L                     " Line number/Total lines
+set statusline+=\                         " A space
+set statusline+=%p%%                      " Position in percentage
+set statusline+=\                         " A space
 
 "------------------------------------------------------------
 " File Browsing
@@ -210,7 +212,8 @@ elseif &filetype == 'java'
 elseif &filetype == 'sh'
     exec "!time bash %"
 elseif &filetype == 'python'
-    exec "!time python3 %"
+    "exec "term time -l -h -p  python3 %"
+    exec "term time -h -p  python3 %"
 elseif &filetype == 'html'
     exec "!google-chrome % &"
 elseif &filetype == 'go'
