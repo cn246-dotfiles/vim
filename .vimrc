@@ -85,8 +85,6 @@ set hidden                             " Switch buffers without saving first
 set hlsearch                           " Highlight searches
 set ignorecase                         " Use case insensitive search
 set incsearch                          " Highlight as you type a search term
-set modeline                           " Enable modeline
-set modelines=3                        " Bottom 3 lines for modeline
 set nospell                            " Disable spellcheck
 set nostartofline                      " Stop going to first character of line
 set notimeout ttimeout ttimeoutlen=200 " Time out on keycodes, but not mappings
@@ -112,6 +110,8 @@ set foldmethod=manual                  " Fold method
 set laststatus=2                       " Always display the status line
 set list                               " Mark whitespace and tabs, etc.
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set modeline                           " Set filetype and indentation via comment
+set modelines=3                        " Look for modeline in bottom 3 lines
 set nofoldenable                       " Don't fold initially
 set relativenumber                     " line numbers counting away from cursor
 set ruler                              " Cursor position in the status line
