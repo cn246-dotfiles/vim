@@ -11,7 +11,8 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'arcticicestudio/nord-vim'
 Plug 'dense-analysis/ale'
-Plug '/opt/homebrew/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug '~/.local/src/fzf'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
