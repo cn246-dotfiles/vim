@@ -45,6 +45,8 @@ function! NordOverrides() abort
   highlight vimComment  ctermfg=245
   highlight Visual      ctermbg=235
   highlight CursorLine  ctermbg=235
+  highlight Error       cterm=bold  ctermfg=233   ctermbg=1 guifg=#D8DEE9 guibg=#BF616A
+  highlight ErrorMsg    cterm=reverse ctermfg=1
 endfunction
 
 augroup nordColors
@@ -61,6 +63,7 @@ function! DefaultOverrides() abort
   highlight Visual      ctermbg=14  ctermfg=08
   highlight CursorLine  cterm=NONE  ctermbg=06  ctermfg=234
   highlight DiffAdd     cterm=bold  ctermfg=236 ctermbg=10
+  highlight Error       cterm=NONE  ctermfg=0   ctermbg=1 guifg=#D8DEE9 guibg=#BF616A
   highlight DiffChange  cterm=bold  ctermfg=07  ctermbg=12
   highlight DiffDelete  cterm=bold  ctermfg=236 ctermbg=09
   highlight DiffText    cterm=bold  ctermfg=236 ctermbg=01
