@@ -46,7 +46,7 @@ function! NordOverrides() abort
   highlight Visual      ctermbg=235
   highlight CursorLine  ctermbg=235
   highlight Error       cterm=bold  ctermfg=233   ctermbg=1 guifg=#D8DEE9 guibg=#BF616A
-  highlight ErrorMsg    cterm=reverse ctermfg=1
+  highlight ErrorMsg    cterm=reverse ctermfg=0
 endfunction
 
 augroup nordColors
@@ -111,7 +111,7 @@ syntax on                              " Enable syntax highlighting
 set cmdheight=2                        " Set command window height to 2 lines
 set colorcolumn=80                     " Highlight column 80
 set cursorline                         " Highlight current line
-set foldmethod=manual                  " Fold method
+set foldmethod=indent                  " Fold method
 set laststatus=2                       " Always display the status line
 set list                               " Mark whitespace and tabs, etc.
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
@@ -174,7 +174,7 @@ nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 
 " Open file browser with <space>+pv
-nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 20<CR>
+nnoremap <leader>pv :Lexplore<CR>
 
 "" Source Vim config file.
 nnoremap <leader>sv :source $MYVIMRC<CR>
