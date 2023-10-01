@@ -13,6 +13,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf.vim'
 Plug '~/.local/src/fzf'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -45,8 +46,9 @@ function! NordOverrides() abort
   highlight vimComment  ctermfg=245
   highlight Visual      ctermbg=235
   highlight CursorLine  ctermbg=235
-  highlight Error       cterm=bold  ctermfg=233   ctermbg=1 guifg=#D8DEE9 guibg=#BF616A
-  highlight ErrorMsg    cterm=reverse ctermfg=0
+  highlight Error       cterm=bold  ctermfg=9   ctermbg=none
+" highlight Error       cterm=reverse  ctermfg=1   ctermbg=7
+" highlight ErrorMsg    cterm=reverse
 endfunction
 
 augroup nordColors
