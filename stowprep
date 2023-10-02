@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-dirs=( ~/.vim ~/.vim/after ~/.vim/ftdetect ~/.vim/ftplugin )
+dirs=(~/.vim ~/.vim/after ~/.vim/ftdetect ~/.vim/ftplugin)
 
 # Delete old symlinks
 find "$HOME/.vim" -type l ! -path "$HOME/.vim/plugged/*" -delete
