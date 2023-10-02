@@ -9,3 +9,4 @@ set tabstop=4
 set textwidth=79
 let python_highlight_all=1
 let b:ale_fixers = {'python': ['isort', 'black']}
+let b:ale_fix_on_save_ignore = {'python': ['black']}
