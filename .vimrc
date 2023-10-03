@@ -17,7 +17,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'Glench/Vim-Jinja2-Syntax'
 Plug '~/.vim/plugged/vim-redact-pass'
 Plug 'vim-scripts/AutoComplPop'
 "Plug 'catppuccin/vim', { 'as': 'catppuccin' }
@@ -47,8 +46,6 @@ function! NordOverrides() abort
   highlight Visual      ctermbg=235
   highlight CursorLine  ctermbg=235
   highlight Error       cterm=bold  ctermfg=9   ctermbg=none
-" highlight Error       cterm=reverse  ctermfg=1   ctermbg=7
-" highlight ErrorMsg    cterm=reverse
 endfunction
 
 augroup nordColors
