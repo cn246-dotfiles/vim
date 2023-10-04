@@ -19,7 +19,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug '~/.vim/plugged/vim-redact-pass'
 Plug 'vim-scripts/AutoComplPop'
-"Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 "Plug 'mattn/calendar-vim'
 "Plug 'mattn/emmet-vim'
 "Plug 'vimwiki/vimwiki'
@@ -62,7 +61,7 @@ function! DefaultOverrides() abort
   highlight Visual      ctermbg=14  ctermfg=08
   highlight CursorLine  cterm=NONE  ctermbg=06  ctermfg=234
   highlight DiffAdd     cterm=bold  ctermfg=236 ctermbg=10
-  highlight Error       cterm=NONE  ctermfg=0   ctermbg=1 guifg=#D8DEE9 guibg=#BF616A
+  highlight Error       cterm=NONE  ctermfg=0   ctermbg=1
   highlight DiffChange  cterm=bold  ctermfg=07  ctermbg=12
   highlight DiffDelete  cterm=bold  ctermfg=236 ctermbg=09
   highlight DiffText    cterm=bold  ctermfg=236 ctermbg=01
@@ -279,6 +278,38 @@ function! Sudow()
      	:w !sudo tee % > /dev/null
 endfunction
 command! Sudow call Sudow()
+
+"------------------------------------------------------------
+" FZF
+" https://github.com/junegunn/fzf.vim/issues/837#issuecomment-1582511811
+"------------------------------------------------------------
+let $FZF_DEFAULT_OPTS="--preview-window 'right:57%'
+  \ --preview 'bat --style=numbers --line-range :300 {}'
+  \ --bind ctrl-y:preview-up,ctrl-e:preview-down
+  \ --bind ctrl-u:preview-half-page-up
+  \ --bind ctrl-d:preview-half-page-down
+  \ --bind ctrl-w:toggle-preview-wrap
+  \ --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down
+  \ --bind shift-up:preview-top,shift-down:preview-bottom
+  \ --bind alt-up:half-page-up,alt-down:half-page-down"
+
+command! -bang -nargs=* -complete=custom,RgComplete Rgf
+  \ call fzf#vim#grep(
+  \   'rg --max-count 1 --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
+  \   fzf#vim#with_preview({
+  \     'dir': system(
+  \       'git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]
+  \     }), <bang>0)
+
+function RgComplete (A,L,P)
+  echom a:A[0]
+  if (a:A[0] == '-')
+    return system("rg -h | grep '\\-.\\?[0-9A-Za-z-]*' -o | sort -u")
+  endif
+  if (a:A[0:1] == './')
+    return globpath('.', a:A[2:]..'*')
+  endif
+endfunction
 
 "------------------------------------------------------------
 " Pastebins
