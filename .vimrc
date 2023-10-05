@@ -120,7 +120,7 @@ set relativenumber                     " line numbers counting away from cursor
 set ruler                              " Cursor position in the status line
 set showcmd                            " Show commands in last line of screen
 set wildmenu                           " Better command-line completion
-set wildmode=list,longest              " Completion mode
+set wildmode=longest:full,full         " Completion mode
 
 "------------------------------------------------------------
 " Statusline
