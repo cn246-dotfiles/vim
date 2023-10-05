@@ -79,7 +79,7 @@ filetype indent plugin on              " Guess filetype based on name & contents
 set autoindent                         " Keep same indent as the line you're on
 set backspace=indent,eol,start         " Backspace over indent, eol and start
 set complete+=kspell                   " Set matches for completion
-set completeopt=menuone,longest        " Options for completion
+set completeopt=menuone,noinsert       " Options for completion
 set confirm                            " Ask to save changed files
 set encoding=utf8                      " Set utf8 as standard encoding
 set expandtab                          " Use spaces instead of tabs
