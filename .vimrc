@@ -312,6 +312,20 @@ function RgComplete (A,L,P)
 endfunction
 
 "------------------------------------------------------------
+" Modeline
+" https://vim.fandom.com/wiki/Modeline_magic#Adding_a_modeline
+"------------------------------------------------------------
+function! AppendModeline()
+  let l:modeline = printf("vim: set ft=%s ts=%d sts=%d sw=%d %ssr %set",
+        \ &filetype, &tabstop, &softtabstop, &shiftwidth,
+        \ &shiftround ? '' : 'no', &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+
+"------------------------------------------------------------
 " Pastebins
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
 "------------------------------------------------------------
@@ -347,4 +361,4 @@ elseif has('osx')
       \| tr -d '\n' | pbcopy
 endif
 
-" vim: ft=vim ts=2 sts=2 sw=2 sr et
+" vim: set ft=vim ts=2 sts=2 sw=2 nosr et
