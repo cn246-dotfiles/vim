@@ -177,12 +177,32 @@ nnoremap <leader>pv :Lexplore<CR>
 "" Source Vim config file.
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
+" Run :ALEFix with <space>+af
+nnoremap <leader>af :ALEFix<CR>
+
 " Turn off search highlighting until the next search
 nnoremap <C-L> :nohl<CR><C-L>
 
 " Tab to cycle autocomplete selections
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+" Auto complete brackets
+" https://stackoverflow.com/a/34992101
+" https://vi.stackexchange.com/a/31705
+" https://vim.fandom.com/wiki/Automatically_append_closing_characters
+" inoremap <expr> ) strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+" inoremap <expr> ] strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
+" inoremap <expr> } strpart(getline('.'), col('.')-1, 1) == "}" ? "\<Right>" : "}"
+
+" inoremap "" ""<left>
+" inoremap '' ''<left>
+" inoremap (( ()<left>
+" inoremap [[ []<left>
+" inoremap {{ {}<left>
+" inoremap %% {% %}<left><left><left>
+" inoremap {{<CR> {<CR>}<ESC>O
+" inoremap {{;<CR> {<CR>};<ESC>O
 
 " Toggle spell check.
 nnoremap <F5> :setlocal spell!<CR>
