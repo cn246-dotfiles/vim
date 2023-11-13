@@ -336,7 +336,7 @@ endfunction
 " https://vim.fandom.com/wiki/Modeline_magic#Adding_a_modeline
 "------------------------------------------------------------
 function! AppendModeline()
-  let l:modeline = printf("vim: set ft=%s ts=%d sts=%d sw=%d %ssr %set",
+  let l:modeline = printf("vim: ft=%s ts=%d sts=%d sw=%d %ssr %set",
         \ &filetype, &tabstop, &softtabstop, &shiftwidth,
         \ &shiftround ? '' : 'no', &expandtab ? '' : 'no')
   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
