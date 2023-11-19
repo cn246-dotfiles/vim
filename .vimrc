@@ -7,6 +7,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 " Use vim-plug for plugins.
 call plug#begin('~/.vim/plugged')
 Plug 'arcticicestudio/nord-vim'
@@ -92,6 +93,7 @@ set nospell                            " Disable spellcheck
 set nostartofline                      " Stop going to first character of line
 set notimeout ttimeout ttimeoutlen=200 " Time out on keycodes, but not mappings
 set omnifunc=syntaxcomplete#Complete   " Enable Omni Completion
+set previewheight=25                   " Bigger preview window (eg. ALEInfo)
 set shiftwidth=2                       " Set column number for indentation
 set shortmess+=c                       " Avoid some error messages
 set smartcase                          " Except when using capital letters
