@@ -223,7 +223,7 @@ map <F5> :call CompileRun()<CR>
 imap <F5> <Esc>:call CompileRun()<CR>
 vmap <F5> <Esc>:call CompileRun()<CR>
 
-func! CompileRun()
+function! CompileRun()
 exec "w"
 if &filetype == 'c'
     exec "!gcc % -o %<"
@@ -291,13 +291,13 @@ noremap <leader>w :call TrimWhitespace()<CR>
 
 " Flag unnecessary whitespace
 highlight BadWhitespace ctermbg=red guibg=darkred
-au BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+autocmd BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "------------------------------------------------------------
 " Write as sudo
 "------------------------------------------------------------
 function! Sudow()
-     	:w !sudo tee % > /dev/null
+    :w !sudo tee % > /dev/null
 endfunction
 command! Sudow call Sudow()
 
