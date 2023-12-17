@@ -2,11 +2,10 @@
 " Plugins
 "------------------------------------------------------------
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 
 " Use vim-plug for plugins.
 call plug#begin('~/.vim/plugged')
@@ -19,7 +18,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug '~/.vim/plugged/vim-redact-pass'
-Plug 'vim-scripts/AutoComplPop'
 "Plug 'mattn/calendar-vim'
 "Plug 'mattn/emmet-vim'
 "Plug 'vimwiki/vimwiki'
@@ -33,44 +31,44 @@ runtime macros/matchit.vim
 "------------------------------------------------------------
 " Set colorscheme
 if $SSH_CONNECTION
-  colorscheme default
+    colorscheme default
 else
-  colorscheme nord
+    colorscheme nord
 endif
 
 " Lighten nord comment color
 function! NordOverrides() abort
-  autocmd!
-  highlight Comment     ctermfg=245
-  highlight vimComment  ctermfg=245
-  highlight Visual      ctermbg=235
-  highlight CursorLine  ctermbg=235
-  highlight Error       cterm=bold  ctermfg=9   ctermbg=none
+    autocmd!
+    highlight Comment     ctermfg=245
+    highlight vimComment  ctermfg=245
+    highlight Visual      ctermbg=235
+    highlight CursorLine  ctermbg=235
+    highlight Error       cterm=bold  ctermfg=9   ctermbg=none
 endfunction
 
 augroup nordColors
-  autocmd!
-  autocmd ColorScheme nord call NordOverrides()
+    autocmd!
+    autocmd ColorScheme nord call NordOverrides()
 augroup END
 
 " Configure default colors
 function! DefaultOverrides() abort
-  highlight Comment     ctermfg=245
-  highlight vimComment  ctermfg=06
-  highlight ColorColumn ctermbg=14  ctermfg=0
-  highlight Search      ctermbg=02  ctermfg=234
-  highlight Visual      ctermbg=14  ctermfg=08
-  highlight CursorLine  cterm=NONE  ctermbg=06  ctermfg=234
-  highlight DiffAdd     cterm=bold  ctermfg=236 ctermbg=10
-  highlight Error       cterm=NONE  ctermfg=0   ctermbg=1
-  highlight DiffChange  cterm=bold  ctermfg=07  ctermbg=12
-  highlight DiffDelete  cterm=bold  ctermfg=236 ctermbg=09
-  highlight DiffText    cterm=bold  ctermfg=236 ctermbg=01
+    highlight Comment     ctermfg=245
+    highlight vimComment  ctermfg=06
+    highlight ColorColumn ctermbg=14  ctermfg=0
+    highlight Search      ctermbg=02  ctermfg=234
+    highlight Visual      ctermbg=14  ctermfg=08
+    highlight CursorLine  cterm=NONE  ctermbg=06  ctermfg=234
+    highlight DiffAdd     cterm=bold  ctermfg=236 ctermbg=10
+    highlight Error       cterm=NONE  ctermfg=0   ctermbg=1
+    highlight DiffChange  cterm=bold  ctermfg=07  ctermbg=12
+    highlight DiffDelete  cterm=bold  ctermfg=236 ctermbg=09
+    highlight DiffText    cterm=bold  ctermfg=236 ctermbg=01
 endfunction
 
 augroup defaultColors
-  autocmd!
-  autocmd ColorScheme default call DefaultOverrides()
+    autocmd!
+    autocmd ColorScheme default call DefaultOverrides()
 augroup END
 
 "------------------------------------------------------------
@@ -159,7 +157,8 @@ let mapleader=" "
 set mouse=a
 
 " Show contents of buffers
-nnoremap <leader>b :buffers<CR>:buffer<Space>
+" nnoremap <leader>b :buffers<CR>:buffer<Space>
+nnoremap <leader>b :Buffers<CR>
 
 " Move between splits with <space>+[h,j,k,l]
 nnoremap <leader>h :wincmd h<CR>
@@ -224,30 +223,34 @@ imap <F5> <Esc>:call CompileRun()<CR>
 vmap <F5> <Esc>:call CompileRun()<CR>
 
 function! CompileRun()
-exec "w"
-if &filetype == 'c'
-    exec "!gcc % -o %<"
-    exec "!time ./%<"
-elseif &filetype == 'cpp'
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
-elseif &filetype == 'java'
-    exec "!javac %"
-    exec "!time java %"
-elseif &filetype == 'sh'
-    exec "!time bash %"
-elseif &filetype == 'python'
-    "exec "term time -l -h -p  python3 %"
-    exec "term time -h -p  python3 %"
-elseif &filetype == 'html'
-    exec "!google-chrome % &"
-elseif &filetype == 'go'
-    exec "!go build %<"
-    exec "!time go run %"
-elseif &filetype == 'matlab'
-    exec "!time octave %"
-endif
-endfunc
+    exec "w"
+    if &filetype == 'c'
+        exec "!gcc % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %"
+    elseif &filetype == 'sh'
+        exec "!time bash %"
+    elseif &filetype == 'python'
+        "exec "term time -l -h -p  python3 %"
+        exec "term time -h -p  python3 %"
+    elseif &filetype == 'html'
+        if has('linux')
+          exec "!firefox % &"
+        elseif has('osx')
+          exec "!open -a 'Firefox' % &"
+        endif
+    elseif &filetype == 'go'
+        exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'matlab'
+        exec "!time octave %"
+    endif
+endfunction
 
 "------------------------------------------------------------
 " Undo
@@ -299,6 +302,7 @@ autocmd BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 function! Sudow()
     :w !sudo tee % > /dev/null
 endfunction
+
 command! Sudow call Sudow()
 
 "------------------------------------------------------------
@@ -306,31 +310,42 @@ command! Sudow call Sudow()
 " https://github.com/junegunn/fzf.vim/issues/837#issuecomment-1582511811
 "------------------------------------------------------------
 let $FZF_DEFAULT_OPTS="--preview-window 'right:57%'
-  \ --preview 'bat --style=numbers --line-range :300 {}'
-  \ --bind ctrl-y:preview-up,ctrl-e:preview-down
-  \ --bind ctrl-u:preview-half-page-up
-  \ --bind ctrl-d:preview-half-page-down
-  \ --bind ctrl-w:toggle-preview-wrap
-  \ --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down
-  \ --bind shift-up:preview-top,shift-down:preview-bottom
-  \ --bind alt-up:half-page-up,alt-down:half-page-down"
+    \ --preview 'bat --style=numbers --line-range :300 {}'
+    \ --bind ctrl-y:preview-up,ctrl-e:preview-down
+    \ --bind ctrl-u:preview-half-page-up
+    \ --bind ctrl-d:preview-half-page-down
+    \ --bind ctrl-w:toggle-preview-wrap
+    \ --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down
+    \ --bind shift-up:preview-top,shift-down:preview-bottom
+    \ --bind alt-up:half-page-up,alt-down:half-page-down"
 
 command! -bang -nargs=* -complete=custom,RgComplete Rgf
-  \ call fzf#vim#grep(
-  \   'rg --max-count 1 --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
-  \   fzf#vim#with_preview({
-  \     'dir': system(
-  \       'git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]
-  \     }), <bang>0)
+    \ call fzf#vim#grep(
+    \   'rg --max-count 1 --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
+    \   fzf#vim#with_preview({
+    \     'dir': system(
+    \       'git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]
+    \     }), <bang>0)
 
 function RgComplete (A,L,P)
-  echom a:A[0]
-  if (a:A[0] == '-')
-    return system("rg -h | grep '\\-.\\?[0-9A-Za-z-]*' -o | sort -u")
-  endif
-  if (a:A[0:1] == './')
-    return globpath('.', a:A[2:]..'*')
-  endif
+    echom a:A[0]
+    if (a:A[0] == '-')
+        return system("rg -h | grep '\\-.\\?[0-9A-Za-z-]*' -o | sort -u")
+    endif
+    if (a:A[0:1] == './')
+        return globpath('.', a:A[2:]..'*')
+    endif
+endfunction
+
+"------------------------------------------------------------
+" Registers
+" https://stackoverflow.com/a/39348498
+"------------------------------------------------------------
+function! ClearRegs() abort
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, @_)
+    endfor
 endfunction
 
 "------------------------------------------------------------
@@ -338,12 +353,12 @@ endfunction
 " https://vim.fandom.com/wiki/Modeline_magic#Adding_a_modeline
 "------------------------------------------------------------
 function! AppendModeline()
-  let l:modeline = printf("vim: ft=%s ts=%d sts=%d sw=%d %ssr %set",
+    let l:modeline = printf("vim: ft=%s ts=%d sts=%d sw=%d %ssr %set",
         \ &filetype, &tabstop, &softtabstop, &shiftwidth,
         \ &shiftround ? '' : 'no', &expandtab ? '' : 'no')
-  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
-  call append(line("$"), "")
-  call append(line("$"), l:modeline)
+    let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+    call append(line("$"), "")
+    call append(line("$"), l:modeline)
 endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
@@ -353,34 +368,34 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 "------------------------------------------------------------
 if has('linux')
     command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
-      \| tr -d '\n' | xclip -i -selection clipboard
+        \| tr -d '\n' | xclip -i -selection clipboard
 elseif has('osx')
     command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
     command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
     command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
     command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
     command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
     command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
     command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
-      \| tr -d '\n' | pbcopy
+        \| tr -d '\n' | pbcopy
 endif
 
 " vim: set ft=vim ts=2 sts=2 sw=2 nosr et
