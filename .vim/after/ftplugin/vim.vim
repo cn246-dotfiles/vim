@@ -11,3 +11,5 @@ if "\n" .. getline(1, 10)->join("\n") =~# '\n\s*vim9\%[script]\>'
 else
   setlocal commentstring=\"\ %s
 endif
+
+" vim: ft=vim ts=2 sts=2 sw=2 nosr et
