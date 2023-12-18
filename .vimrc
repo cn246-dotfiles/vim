@@ -18,9 +18,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug '~/.vim/plugged/vim-redact-pass'
-"Plug 'mattn/calendar-vim'
 "Plug 'mattn/emmet-vim'
-"Plug 'vimwiki/vimwiki'
 call plug#end()
 
 " Enable matchit
