@@ -178,9 +178,14 @@ if executable('fzf')
       \ --bind shift-up:preview-top,shift-down:preview-bottom
       \ --bind alt-up:half-page-up,alt-down:half-page-down"
 
+  command! -bang -nargs=* GGrep
+      \ call fzf#vim#grep(
+      \   'git grep --line-number -- '.fzf#shellescape(<q-args>),
+      \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+
   command! -bang -nargs=* -complete=custom,RgComplete Rgf
       \ call fzf#vim#grep(
-      \   'rg --max-count 1 --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
+      \   'rg --hidden --max-count 1 --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
       \   fzf#vim#with_preview({
       \     'dir': system(
       \       'git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]
