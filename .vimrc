@@ -305,6 +305,8 @@ function! ClearRegs() abort
     endfor
 endfunction
 
+command! Cleareg call ClearRegs()
+
 "------------------------------------------------------------
 " Sudo
 "------------------------------------------------------------
