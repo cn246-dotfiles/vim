@@ -154,6 +154,45 @@ let g:netrw_browse_split=4             " Open in same buffer as existing file
 let g:netrw_winsize=25                 " Set file tree at 25% of window width
 
 "------------------------------------------------------------
+" Mappings
+"------------------------------------------------------------
+" Set leader to spacebar
+let mapleader=" "
+
+" Source Vim config file.
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Move between splits with <space>+[h,j,k,l]
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+
+" Copy/paste
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+
+" Open file browser with <space>+pv
+nnoremap <leader>pv :Lexplore<CR>
+
+" Tab navigaton
+" TODO: this cycles through actual terminal tabs, not vim tabs.
+" nnoremap <C-S-TAB> :tabprevious<CR>
+" nnoremap <C-TAB>   :tabnext<CR>
+
+" Turn off search highlighting until the next search
+nnoremap <C-L> :nohl<CR><C-L>
+
+" Tab to cycle autocomplete selections
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+" Use <F11> to toggle paste
+set pastetoggle=<F11>
+
+"------------------------------------------------------------
 " ALE
 "------------------------------------------------------------
 " Navigate ALE errors
@@ -208,45 +247,6 @@ if executable('fzf')
 else
   nnoremap <leader>b :buffers<CR>:buffer<Space>
 endif
-
-"------------------------------------------------------------
-" Mappings
-"------------------------------------------------------------
-" Set leader to spacebar
-let mapleader=" "
-
-" Source Vim config file.
-nnoremap <leader>sv :source $MYVIMRC<CR>
-
-" Move between splits with <space>+[h,j,k,l]
-nnoremap <leader>h :wincmd h<CR>
-nnoremap <leader>j :wincmd j<CR>
-nnoremap <leader>k :wincmd k<CR>
-nnoremap <leader>l :wincmd l<CR>
-
-" Copy/paste
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>p "+p
-vnoremap <leader>p "+p
-
-" Open file browser with <space>+pv
-nnoremap <leader>pv :Lexplore<CR>
-
-" Tab navigaton
-" TODO: this cycles through actual terminal tabs, not vim tabs.
-" nnoremap <C-S-TAB> :tabprevious<CR>
-" nnoremap <C-TAB>   :tabnext<CR>
-
-" Turn off search highlighting until the next search
-nnoremap <C-L> :nohl<CR><C-L>
-
-" Tab to cycle autocomplete selections
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-
-" Use <F11> to toggle paste
-set pastetoggle=<F11>
 
 "------------------------------------------------------------
 " Modeline
