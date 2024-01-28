@@ -163,6 +163,9 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " Run :ALEFix
 nnoremap <leader>af :ALEFix<CR>
 
+" Toggle ALE
+map <leader>at :ALEToggle<CR>
+
 "------------------------------------------------------------
 " FZF
 " https://github.com/junegunn/fzf.vim/issues/837#issuecomment-1582511811
