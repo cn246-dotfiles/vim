@@ -1,6 +1,7 @@
 set autoindent
 set expandtab
 set foldmethod=indent
+set keywordprg=ansible-doc
 set nofoldenable
 set shiftround
 set shiftwidth=2
