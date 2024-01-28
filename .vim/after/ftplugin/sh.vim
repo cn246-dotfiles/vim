@@ -1,10 +1,10 @@
-set autoindent
-set expandtab
-set foldmethod=syntax
-set shiftround
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+setlocal autoindent
+setlocal expandtab
+setlocal foldmethod=syntax
+setlocal shiftround
+setlocal shiftwidth=2
+setlocal softtabstop=2
+setlocal tabstop=2
 let g:sh_fold_enabled= 7
 let b:ale_linters = {'sh': ['shellcheck']}
 let b:ale_fixers = {'sh': ['shfmt']}

@@ -1,12 +1,12 @@
-set autoindent
-set expandtab
-set foldmethod=indent
-set keywordprg=ansible-doc
-set nofoldenable
-set shiftround
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+setlocal autoindent
+setlocal expandtab
+setlocal foldmethod=indent
+setlocal keywordprg=ansible-doc
+setlocal nofoldenable
+setlocal shiftround
+setlocal shiftwidth=2
+setlocal softtabstop=2
+setlocal tabstop=2
 let b:ale_linters = {'ansible': ['ansible_lint'], 'yaml': ['yamllint']}
 let b:ale_fix_on_save_ignore = {'yaml': ['yamlfix']}
 

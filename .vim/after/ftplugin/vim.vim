@@ -1,9 +1,9 @@
-set fileformat=unix
-set foldmethod=indent
-set autoindent
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+setlocal fileformat=unix
+setlocal foldmethod=indent
+setlocal autoindent
+setlocal shiftwidth=2
+setlocal softtabstop=2
+setlocal tabstop=2
 
 " Comments starts with # in Vim9 script.  We have to guess which one to use.
 if "\n" .. getline(1, 10)->join("\n") =~# '\n\s*vim9\%[script]\>'
