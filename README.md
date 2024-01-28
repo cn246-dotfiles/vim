@@ -41,29 +41,29 @@ I try not to install a bunch of plugins. It makes for an easy transition when I
 log into a server without my dotfiles.
 
 
-**arcticicestudio - nord-vim**
+#### arcticicestudio - nord-vim
 I prefer the Nord colorscheme and haven't found any that I like better yet.
 There are some overrides in the .vimrc for some things though.
 
 
-**dense-analysis - ale**
+#### dense-analysis - ale
 I'm a big fan of the linting (and fixing) capabilities that ALE offers.
 
 
-**junegunn - fzf.vim**
+#### junegunn - fzf.vim
 FZF is pretty great. I doubt I'm using it to it's full potential, but really like
 it so far.
 
 
-**~/.local/src/fzf**
+#### ~/.local/src/fzf
 Required for use with FZF
 
 
-**tpope - vim-commentary**
+#### tpope - vim-commentary
 This makes commenting and uncommenting code extremely convenient.
 
 
-**tpope - vim-fugitive**
+#### tpope - vim-fugitive
 Slowly warming up to this one..
 
 I've had it installed for a while but haven't explored what it offers.
@@ -72,14 +72,14 @@ I can definitely see how it will be handy and am going to attempt to integrate
 it into my workflow.
 
 
-**tpope - vim-repeat**
+#### tpope - vim-repeat
 I use this all the time to repeat surrounds.
 
 
-**tpope - vim-surround**
+#### tpope - vim-surround
 I use this all the time too. Easy wrapping text with quotes and brackets.
 
 
-**~/.vim/plugged/vim-redact-pass**
+#### vim/plugged/vim-redact-pass
 Found this one when reading up on the `pass` password manager.
 https://dev.sanctum.geek.nz/cgit/vim-redact-pass.git/about/
