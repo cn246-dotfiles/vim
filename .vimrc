@@ -324,6 +324,7 @@ function! SpellUpdate()
       execute "mkspell! " . fnameescape(d)
   endfor
 endfunction
+
 command! SpellUpdate call SpellUpdate()
 
 "------------------------------------------------------------
@@ -388,7 +389,11 @@ endfunction
 noremap <leader>w :call TrimWhitespace()<CR>
 
 " Flag unnecessary whitespace
-highlight BadWhitespace ctermbg=red guibg=darkred
-autocmd BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+highlight BadWhitespace ctermbg=1 ctermfg=0
+match BadWhitespace /\s\+$/
+autocmd BufWinEnter * match BadWhitespace /\s\+$/
+autocmd InsertEnter * match BadWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match BadWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " vim: set ft=vim ts=2 sts=2 sw=2 nosr et
