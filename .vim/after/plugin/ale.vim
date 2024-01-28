@@ -7,3 +7,5 @@ if has_key(g:plugs, "ale")
   " Enable ale fixers on save
   let g:ale_fix_on_save = 1
 endif
+
+" vim: ft=vim ts=2 sts=2 sw=2 nosr et
