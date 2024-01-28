@@ -242,9 +242,6 @@ nnoremap <C-L> :nohl<CR><C-L>
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
-" Toggle spell check.
-nnoremap <F5> :setlocal spell!<CR>
-
 " Use <F11> to toggle paste
 set pastetoggle=<F11>
 
@@ -311,6 +308,20 @@ function! ClearRegs() abort
 endfunction
 
 command! Cleareg call ClearRegs()
+
+"------------------------------------------------------------
+" Spellcheck
+"------------------------------------------------------------
+" Toggle spell check.
+nnoremap <F5> :setlocal spell!<CR>
+
+" Compile wordlists in case of manual changes or new files
+function! SpellUpdate()
+  for d in globpath(&runtimepath, "spell/*.add", 0, 1)
+      execute "mkspell! " . fnameescape(d)
+  endfor
+endfunction
+command! SpellUpdate call SpellUpdate()
 
 "------------------------------------------------------------
 " Sudo
