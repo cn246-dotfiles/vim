@@ -130,8 +130,10 @@ GenServer
 Genomic
 Geocities
 Gigalixir
+GitHub
 GitLab
 GitOps
+Github
 Gitlab
 GlusterFS
 GnuCash
@@ -422,6 +424,7 @@ backports
 balancer
 base64
 benchmarking
+bitbucket
 blockchain
 boolean
 buildpack
@@ -462,6 +465,8 @@ foobar2000
 frictionless
 gifs
 git's
+github
+gitlab
 globbing
 globstar
 gmail
