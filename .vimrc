@@ -73,6 +73,17 @@ augroup defaultColors
     autocmd ColorScheme default call DefaultOverrides()
 augroup END
 
+" Configure git merge conflict colors - :help syn-pattern
+function! ConflictsHighlight() abort
+    syntax match conflictMarker "^\(<<<<<<<.*\||||||||.*\|>>>>>>>.*\|=======\)$"
+    highlight conflictMarker ctermfg=208
+endfunction
+
+augroup conflictColors
+    autocmd!
+    autocmd BufEnter * call ConflictsHighlight()
+augroup END
+
 "------------------------------------------------------------
 " General
 "------------------------------------------------------------
