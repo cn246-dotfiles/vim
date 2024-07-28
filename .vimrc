@@ -11,6 +11,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'arcticicestudio/nord-vim'
 Plug 'dense-analysis/ale'
+Plug 'hashivim/vim-terraform'
 Plug 'junegunn/fzf.vim'
 Plug '~/.local/src/fzf'
 Plug 'tpope/vim-commentary'
