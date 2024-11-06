@@ -38,15 +38,17 @@ endif
 " Lighten nord comment color
 function! NordOverrides() abort
     autocmd!
-    highlight Comment     cterm=none  ctermbg=none ctermfg=245
-    highlight Error       cterm=bold  ctermbg=none ctermfg=9
-    highlight Visual      cterm=none  ctermbg=234  ctermfg=3
-    highlight vimComment  cterm=none  ctermbg=none ctermfg=245
-    if &diff
-        highlight CursorLine cterm=reverse ctermbg=252 ctermfg=0
-    else
-        highlight CursorLine cterm=none    ctermbg=235 ctermfg=none
-    endif
+    highlight Comment     cterm=none  ctermbg=none  ctermfg=245
+    highlight Error       cterm=bold  ctermbg=none  ctermfg=9
+    highlight vimComment  cterm=none  ctermbg=none  ctermfg=245
+  if &diff
+    highlight CursorLine  cterm=reverse   ctermbg=15  ctermfg=0
+    highlight DiffChange  cterm=none      ctermbg=8   ctermfg=7
+    highlight Visual      cterm=reverse   ctermbg=172 ctermfg=233
+  else
+    highlight CursorLine  cterm=none  ctermbg=0 ctermfg=none
+    highlight Visual      cterm=none  ctermbg=233 ctermfg=172
+  endif
 endfunction
 
 augroup nordColors
