@@ -40,15 +40,17 @@ function! NordOverrides() abort
     autocmd!
     highlight Comment     cterm=none  ctermbg=none  ctermfg=245
     highlight Error       cterm=bold  ctermbg=none  ctermfg=9
+    highlight Folded      cterm=none  ctermbg=0     ctermfg=245
+    highlight Visual      cterm=none  ctermbg=234   ctermfg=3
     highlight vimComment  cterm=none  ctermbg=none  ctermfg=245
-  if &diff
-    highlight CursorLine  cterm=reverse   ctermbg=15  ctermfg=0
-    highlight DiffChange  cterm=none      ctermbg=8   ctermfg=7
-    highlight Visual      cterm=reverse   ctermbg=172 ctermfg=233
-  else
-    highlight CursorLine  cterm=none  ctermbg=0 ctermfg=none
-    highlight Visual      cterm=none  ctermbg=233 ctermfg=172
-  endif
+    if &diff
+      highlight CursorLine  cterm=reverse   ctermbg=15  ctermfg=0
+      highlight DiffChange  cterm=none      ctermbg=8   ctermfg=7
+      highlight Visual      cterm=reverse   ctermbg=172 ctermfg=233
+    else
+      highlight CursorLine  cterm=none  ctermbg=0 ctermfg=none
+      highlight Visual      cterm=none  ctermbg=233 ctermfg=172
+    endif
 endfunction
 
 augroup nordColors
@@ -128,19 +130,31 @@ syntax on                              " Enable syntax highlighting
 set cmdheight=2                        " Set command window height to 2 lines
 set colorcolumn=80                     " Highlight column 80
 set cursorline                         " Highlight current line
-" set foldcolumn=2                       " Show folds in sidebar
-set foldmethod=indent                  " Fold method
 set laststatus=2                       " Always display the status line
 set list                               " Mark whitespace and tabs, etc.
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 set modeline                           " Set filetype and indentation via comment
 set modelines=3                        " Look for modeline in bottom 3 lines
-set nofoldenable                       " Don't fold initially
 set relativenumber                     " line numbers counting away from cursor
 set ruler                              " Cursor position in the status line
 set showcmd                            " Show commands in last line of screen
 set wildmenu                           " Better command-line completion
 set wildmode=longest:full,full         " Completion mode
+
+"------------------------------------------------------------
+" Folding
+"------------------------------------------------------------
+set foldcolumn=2                       " Show folds in sidebar
+set foldmethod=indent                  " Set fold method to indent
+set nofoldenable                       " Don't fold initially
+
+" Set manual folding from indent mode when attempting to define a fold with zf
+nnoremap <expr> zf
+  \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zf' : 'zf'
+
+" Set manual folding from indent mode when attempting to delete a fold with zd
+nnoremap <expr> zd
+  \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zd' : 'zd'
 
 "------------------------------------------------------------
 " Statusline
