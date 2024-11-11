@@ -425,4 +425,16 @@ autocmd InsertEnter * match BadWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match BadWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+"------------------------------------------------------------
+" Viminfo file
+"------------------------------------------------------------
+set viminfo=%,'100,/50,:100,<500,h,n~/.vim/cache/.viminfo
+"           | |    |    |   |    | + viminfo file path
+"           | |    |    |   |    + disable 'hlsearch' when loading viminfo
+"           | |    |    |   + save lines for each register
+"           | |    |    + save command-line history
+"           | |    + save search history
+"           | + save file marks
+"           + save/restore buffer list
+
 " vim: set ft=vim ts=2 sts=2 sw=2 nosr et
