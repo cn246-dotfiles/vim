@@ -61,9 +61,9 @@ augroup END
 
 " Configure default colors
 function! DefaultOverrides() abort
-    highlight ColorColumn cterm=none  ctermbg=14   ctermfg=0
+    highlight ColorColumn cterm=none  ctermbg=235   ctermfg=15
     highlight Comment     cterm=none  ctermbg=none ctermfg=245
-    highlight CursorLine  cterm=none  ctermbg=06   ctermfg=234
+    highlight CursorLine  cterm=none  ctermbg=235   ctermfg=15
     highlight DiffAdd     cterm=bold  ctermbg=10   ctermfg=236
     highlight DiffChange  cterm=bold  ctermbg=12   ctermfg=07
     highlight DiffDelete  cterm=bold  ctermbg=09   ctermfg=236
