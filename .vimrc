@@ -31,9 +31,10 @@ runtime macros/matchit.vim
 "------------------------------------------------------------
 " Set colorscheme
 if $SSH_CONNECTION
-    colorscheme default
+    colorscheme habamax
 else
-    colorscheme nord
+    " colorscheme nord
+    colorscheme habamax
 endif
 
 " Lighten nord comment color
