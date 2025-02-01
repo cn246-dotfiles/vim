@@ -5,8 +5,9 @@ if has_key(g:plugs, "ale")
   " Fixers to use when calling ALEFix
   let g:ale_fixers = {
   \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \   'json': ['jq'],
   \   'markdown': [],
-  \   'python': ['black', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
+  \   'python': ['isort', 'remove_trailing_lines', 'ruff', 'trim_whitespace'],
   \   'sh': ['shfmt', 'remove_trailing_lines', 'trim_whitespace'],
   \   'yaml': ['yamlfix', 'remove_trailing_lines', 'trim_whitespace'],
   \}
@@ -14,7 +15,7 @@ if has_key(g:plugs, "ale")
   " Fixers to ignore with fix on save
   let g:ale_fix_on_save_ignore = {
   \   'markdown': ['remove_trailing_lines', 'trim_whitespace'],
-  \   'python': ['black'],
+  \   'python': ['ruff'],
   \   'sh': ['shfmt'],
   \   'yaml': ['yamlfix']
   \}
@@ -26,13 +27,16 @@ if has_key(g:plugs, "ale")
   \   'json': ['jq'],
   \   'python': ['pylint', 'ruff'],
   \   'sh': ['shellcheck'],
-  \   'yaml': ['yamllint']
+  \   'yaml': ['yamllint', 'yq']
   \}
 
   " Configure shfmt
   let g:ale_sh_shfmt_options = '--case-indent --indent 2 --space-redirects'
 
-  " Python virtual envs
+  " Python uv and virtual envs
+  let g:ale_python_auto_uv = 1
+  let g:ale_python_pylint_auto_uv = 1
+  let g:ale_python_ruff_auto_uv = 1
   let g:ale_python_auto_virtualenv = 1
 
 endif
