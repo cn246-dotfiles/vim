@@ -30,55 +30,7 @@ runtime macros/matchit.vim
 " Colorscheme
 "------------------------------------------------------------
 " Set colorscheme
-if $SSH_CONNECTION
-    colorscheme habamax
-else
-    " colorscheme nord
-    colorscheme habamax
-endif
-
-" Lighten nord comment color
-function! NordOverrides() abort
-    autocmd!
-    highlight Comment     cterm=none  ctermbg=none  ctermfg=245
-    highlight Error       cterm=bold  ctermbg=none  ctermfg=9
-    highlight Folded      cterm=none  ctermbg=0     ctermfg=245
-    highlight Visual      cterm=none  ctermbg=234   ctermfg=3
-    highlight vimComment  cterm=none  ctermbg=none  ctermfg=245
-    if &diff
-      highlight CursorLine  cterm=reverse   ctermbg=15  ctermfg=0
-      highlight DiffChange  cterm=none      ctermbg=8   ctermfg=7
-      highlight Visual      cterm=reverse   ctermbg=172 ctermfg=233
-    else
-      highlight CursorLine  cterm=none  ctermbg=0 ctermfg=none
-      highlight Visual      cterm=none  ctermbg=233 ctermfg=172
-    endif
-endfunction
-
-augroup nordColors
-    autocmd!
-    autocmd ColorScheme nord call NordOverrides()
-augroup END
-
-" Configure default colors
-function! DefaultOverrides() abort
-    highlight ColorColumn cterm=none  ctermbg=235   ctermfg=15
-    highlight Comment     cterm=none  ctermbg=none ctermfg=245
-    highlight CursorLine  cterm=none  ctermbg=235   ctermfg=15
-    highlight DiffAdd     cterm=bold  ctermbg=10   ctermfg=236
-    highlight DiffChange  cterm=bold  ctermbg=12   ctermfg=07
-    highlight DiffDelete  cterm=bold  ctermbg=09   ctermfg=236
-    highlight DiffText    cterm=bold  ctermbg=01   ctermfg=236
-    highlight Error       cterm=none  ctermbg=1    ctermfg=0
-    highlight Search      cterm=none  ctermbg=02   ctermfg=234
-    highlight Visual      cterm=none  ctermbg=14   ctermfg=08
-    highlight vimComment  cterm=none  ctermbg=none ctermfg=06
-endfunction
-
-augroup defaultColors
-    autocmd!
-    autocmd ColorScheme default call DefaultOverrides()
-augroup END
+colorscheme habamax
 
 " Configure git merge conflict colors - :help syn-pattern
 function! ConflictsHighlight() abort
@@ -181,7 +133,9 @@ set statusline+=\                         " A space
 "------------------------------------------------------------
 let g:netrw_banner=0                   " Don't show text at top of file tree
 let g:netrw_browse_split=4             " Open in same buffer as existing file
-let g:netrw_winsize=25                 " Set file tree at 25% of window width
+let g:netrw_winsize=20                 " Set file tree at 20% of window width
+let ghregex='\(^\|\s\s\)\zs\.\S\+'     " Set files to hide by default
+let g:netrw_list_hide=ghregex          " Hide files by default
 
 "------------------------------------------------------------
 " Mappings
@@ -377,6 +331,7 @@ map <Leader>t :term ++close<cr>
 
 " vim-powered terminal in new tab
 map <Leader>T :tab term ++close<cr>
+" map <Leader>T :tab term ++curwin ++close<cr>
 
 "------------------------------------------------------------
 " Undo
