@@ -32,7 +32,6 @@ and tweaked to my liking.
 |ALE     | `<leader>at` | Toggle ALE |
 |ALE     | `<Ctrl>j`    | Next ALE error |
 |ALE     | `<Ctrl>k`    | Previous ALE error |
-|FZF/VIM | `<leader>b`  | List buffers in FZF (if installed) or Vim window |
 
 ----
 
@@ -41,22 +40,16 @@ I try not to install a bunch of plugins. It makes for an easy transition when I
 log into a server without my dotfiles.
 
 
-#### arcticicestudio - nord-vim
-I prefer the Nord colorscheme and haven't found any that I like better yet.
-There are some overrides in the .vimrc for some things though.
-
-
 #### dense-analysis - ale
 I'm a big fan of the linting (and fixing) capabilities that ALE offers.
 
 
-#### junegunn - fzf.vim
-FZF is pretty great. I doubt I'm using it to it's full potential, but really like
-it so far.
+#### hashivim - vim-terraform
+Mainly used for terraform syntax hilighting.
 
 
-#### ~/.local/src/fzf
-Required for use with FZF
+#### kshenoy - vim-signature
+Helps view and manage Vim marks.
 
 
 #### tpope - vim-commentary
