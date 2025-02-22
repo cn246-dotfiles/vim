@@ -9,18 +9,15 @@ endif
 
 " Use vim-plug for plugins.
 call plug#begin('~/.vim/plugged')
-Plug 'arcticicestudio/nord-vim'
-Plug 'dense-analysis/ale'
-Plug 'hashivim/vim-terraform'
-Plug 'junegunn/fzf.vim'
-Plug 'kshenoy/vim-signature'
-Plug '~/.local/src/fzf'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug '~/.vim/plugged/vim-redact-pass'
-"Plug 'mattn/emmet-vim'
+Plug 'dense-analysis/ale'             " File linting
+Plug 'hashivim/vim-terraform'         " Terraform syntax highlighting
+Plug 'kshenoy/vim-signature'          " Place toggle and display Vim marks
+Plug 'tpope/vim-commentary'           " Code commenting
+Plug 'tpope/vim-fugitive'             " Git integration
+Plug 'tpope/vim-repeat'               " Repeat vim motions with .
+Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
+Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
+"Plug 'mattn/emmet-vim'               " Expand code abbreviations
 call plug#end()
 
 " Enable matchit
@@ -104,11 +101,11 @@ set nofoldenable                       " Don't fold initially
 
 " Set manual folding from indent mode when attempting to define a fold with zf
 nnoremap <expr> zf
-  \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zf' : 'zf'
+    \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zf' : 'zf'
 
 " Set manual folding from indent mode when attempting to delete a fold with zd
 nnoremap <expr> zd
-  \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zd' : 'zd'
+    \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zd' : 'zd'
 
 "------------------------------------------------------------
 " Statusline
@@ -138,6 +135,31 @@ let ghregex='\(^\|\s\s\)\zs\.\S\+'     " Set files to hide by default
 let g:netrw_list_hide=ghregex          " Hide files by default
 
 "------------------------------------------------------------
+" File Searching
+" https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
+"------------------------------------------------------------
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
+function! Grep(...)
+    return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
+endfunction
+
+command! -nargs=+ -complete=file_in_path -bar Grep  cgetexpr Grep(<f-args>)
+command! -nargs=+ -complete=file_in_path -bar LGrep lgetexpr Grep(<f-args>)
+
+cnoreabbrev <expr> grep  (getcmdtype() ==# ':' && getcmdline() ==# 'grep')  ? 'Grep'  : 'grep'
+cnoreabbrev <expr> lgrep (getcmdtype() ==# ':' && getcmdline() ==# 'lgrep') ? 'LGrep' : 'lgrep'
+
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost cgetexpr cwindow
+    autocmd QuickFixCmdPost lgetexpr lwindow
+augroup END
+
+"------------------------------------------------------------
 " Mappings
 "------------------------------------------------------------
 " Set leader to spacebar
@@ -160,6 +182,14 @@ vnoremap <leader>p "+p
 
 " Open file browser with <space>+pv
 nnoremap <leader>pv :Lexplore<CR>
+
+" Buffers
+nnoremap gb :ls<CR>:buffer<Space>
+nnoremap <leader>b :buffer *
+
+" Find
+set path=.,**
+:nnoremap <leader>f :find *
 
 " Tab navigaton
 " TODO: this cycles through actual terminal tabs, not vim tabs.
@@ -190,49 +220,6 @@ nnoremap <leader>af :ALEFix<CR>
 map <leader>at :ALEToggle<CR>
 
 "------------------------------------------------------------
-" FZF
-" https://github.com/junegunn/fzf.vim/issues/837#issuecomment-1582511811
-"------------------------------------------------------------
-if executable('fzf')
-  let $FZF_DEFAULT_OPTS="--preview-window 'right:57%'
-      \ --preview 'bat --style=numbers --line-range :300 {}'
-      \ --bind ctrl-y:preview-up,ctrl-e:preview-down
-      \ --bind ctrl-u:preview-half-page-up
-      \ --bind ctrl-d:preview-half-page-down
-      \ --bind ctrl-w:toggle-preview-wrap
-      \ --bind ctrl-b:preview-page-up,ctrl-f:preview-page-down
-      \ --bind shift-up:preview-top,shift-down:preview-bottom
-      \ --bind alt-up:half-page-up,alt-down:half-page-down"
-
-  command! -bang -nargs=* GGrep
-      \ call fzf#vim#grep(
-      \   'git grep --line-number -- '.fzf#shellescape(<q-args>),
-      \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
-
-  command! -bang -nargs=* -complete=custom,RgComplete Rgf
-      \ call fzf#vim#grep(
-      \   'rg --hidden --max-count 1 --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
-      \   fzf#vim#with_preview({
-      \     'dir': system(
-      \       'git -C '.expand('%:p:h').' rev-parse --show-toplevel 2> /dev/null')[:-2]
-      \     }), <bang>0)
-
-  function RgComplete (A,L,P)
-      echom a:A[0]
-      if (a:A[0] == '-')
-          return system("rg -h | grep '\\-.\\?[0-9A-Za-z-]*' -o | sort -u")
-      endif
-      if (a:A[0:1] == './')
-          return globpath('.', a:A[2:]..'*')
-      endif
-  endfunction
-
-  nnoremap <leader>b :Buffers<CR>
-else
-  nnoremap <leader>b :buffers<CR>:buffer<Space>
-endif
-
-"------------------------------------------------------------
 " Modeline
 " https://vim.fandom.com/wiki/Modeline_magic#Adding_a_modeline
 "------------------------------------------------------------
@@ -252,36 +239,20 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
 "------------------------------------------------------------
 if has('linux')
-    command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
-        \| tr -d '\n' | xclip -i -selection clipboard
-    command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
-        \| tr -d '\n' | xclip -i -selection clipboard
+    " Sometimes vpaste only copies "Spam check..."
     command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
         \| tr -d '\n' | xclip -i -selection clipboard
-    command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1
-        \| tr -d '\n' | xclip -i -selection clipboard
-    command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io
-        \| tr -d '\n' | xclip -i -selection clipboard
-    command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
-        \| tr -d '\n' | xclip -i -selection clipboard
-    command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
+    command! -range=% PP <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
         \| tr -d '\n' | xclip -i -selection clipboard
 elseif has('osx')
-    command! -range=% SP <line1>,<line2>w !curl -F 'sprunge=<-' http://sprunge.us
-        \| tr -d '\n' | pbcopy
-    command! -range=% CL <line1>,<line2>w !curl -F 'clbin=<-' https://clbin.com
-        \| tr -d '\n' | pbcopy
+    " Sometimes vpaste only copies "Spam check..."
     command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
         \| tr -d '\n' | pbcopy
-    command! -range=% PB <line1>,<line2>w !curl -F 'c=@-' https://ptpb.pw/?u=1
-        \| tr -d '\n' | pbcopy
-    command! -range=% IX <line1>,<line2>w !curl -F 'f:1=<-' http://ix.io
-        \| tr -d '\n' | pbcopy
-    command! -range=% EN <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
-        \| tr -d '\n' | pbcopy
-    command! -range=% TB <line1>,<line2>w !nc termbin.com 9999
+    command! -range=% PP <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
         \| tr -d '\n' | pbcopy
 endif
+
+map vp :exec "w !
 
 "------------------------------------------------------------
 " Registers
@@ -304,9 +275,9 @@ nnoremap <F5> :setlocal spell!<CR>
 
 " Compile wordlists in case of manual changes or new files
 function! SpellUpdate()
-  for d in globpath(&runtimepath, "spell/*.add", 0, 1)
-      execute "mkspell! " . fnameescape(d)
-  endfor
+    for d in globpath(&runtimepath, "spell/*.add", 0, 1)
+        execute "mkspell! " . fnameescape(d)
+    endfor
 endfunction
 
 command! SpellUpdate call SpellUpdate()
@@ -326,16 +297,26 @@ command! Sudow call Sudow()
 nmap <F6> :tab :term ++close<CR>
 tnoremap <F6> <C-W>N
 
-" vim-powered terminal in split window
+" terminal in split window
 map <Leader>t :term ++close<cr>
 
-" vim-powered terminal in new tab
+" terminal in new tab
 map <Leader>T :tab term ++close<cr>
 " map <Leader>T :tab term ++curwin ++close<cr>
 
 "------------------------------------------------------------
 " Undo
 "------------------------------------------------------------
+if !isdirectory($HOME . "/.vim/cache")
+  call mkdir($HOME . "/.vim/cache", "p", 0700)
+endif
+
+if !isdirectory($HOME . "/.vim/cache/swap")
+  call mkdir($HOME . "/.vim/cache/swap", "p", 0700)
+endif
+
+set dir=~/.vim/cache/swap//
+
 function Tmpwatch(path, days)
     let l:path = expand(a:path)
     if isdirectory(l:path)
@@ -350,10 +331,10 @@ function Tmpwatch(path, days)
 endfunction
 
 if exists("+undofile")
-    if !isdirectory($HOME . '/.vimundo')
-        call mkdir($HOME . "/.vimundo", "", 0700)
+    if !isdirectory($HOME . "/.vim/cache/vimundo")
+        call mkdir($HOME . "/.vim/cache/vimundo", "", 0700)
     endif
-    set undodir=~/.vimundo//
+    set undodir=~/.vim/cache/vimundo//
     set undofile
     set undolevels=1000
     set undoreload=10000
@@ -363,16 +344,20 @@ if exists("+undofile")
 endif
 
 "------------------------------------------------------------
+" Viminfo file
+"------------------------------------------------------------
+set viminfo=%,'100,/50,:100,<500,h,n~/.vim/cache/viminfo
+"           | |    |    |   |    | + viminfo file path
+"           | |    |    |   |    + disable 'hlsearch' when loading viminfo
+"           | |    |    |   + save lines for each register
+"           | |    |    + save command-line history
+"           | |    + save search history
+"           | + save file marks
+"           + save/restore buffer list
+
+"------------------------------------------------------------
 " Whitespace
 "------------------------------------------------------------
-function! TrimWhitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfunction
-
-noremap <leader>w :call TrimWhitespace()<CR>
-
 " Flag unnecessary whitespace
 highlight BadWhitespace ctermbg=1 ctermfg=0
 match BadWhitespace /\s\+$/
@@ -381,16 +366,13 @@ autocmd InsertEnter * match BadWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match BadWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-"------------------------------------------------------------
-" Viminfo file
-"------------------------------------------------------------
-set viminfo=%,'100,/50,:100,<500,h,n~/.vim/cache/.viminfo
-"           | |    |    |   |    | + viminfo file path
-"           | |    |    |   |    + disable 'hlsearch' when loading viminfo
-"           | |    |    |   + save lines for each register
-"           | |    |    + save command-line history
-"           | |    + save search history
-"           | + save file marks
-"           + save/restore buffer list
+" Clean up whitespace
+function! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfunction
+
+noremap <leader>w :call TrimWhitespace()<CR>
 
 " vim: set ft=vim ts=2 sts=2 sw=2 nosr et
