@@ -311,11 +311,19 @@ if !isdirectory($HOME . "/.vim/cache")
   call mkdir($HOME . "/.vim/cache", "p", 0700)
 endif
 
+if !isdirectory($HOME . "/.vim/cache/backup")
+  call mkdir($HOME . "/.vim/cache/backup", "p", 0700)
+endif
+
 if !isdirectory($HOME . "/.vim/cache/swap")
   call mkdir($HOME . "/.vim/cache/swap", "p", 0700)
 endif
 
 set dir=~/.vim/cache/swap//
+set backupdir=~/.vim/cache/backup//
+
+" set nobackup
+" set nowritebackup
 
 function Tmpwatch(path, days)
     let l:path = expand(a:path)
