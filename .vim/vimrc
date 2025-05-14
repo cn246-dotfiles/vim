@@ -12,6 +12,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'             " File linting
 Plug 'hashivim/vim-terraform'         " Terraform syntax highlighting
 Plug 'kshenoy/vim-signature'          " Place toggle and display Vim marks
+Plug 'sainnhe/edge'
+Plug 'sainnhe/everforest'
+Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-commentary'           " Code commenting
 Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
@@ -26,8 +29,23 @@ runtime macros/matchit.vim
 "------------------------------------------------------------
 " Colorscheme
 "------------------------------------------------------------
-" Set colorscheme
+" Habamax
 colorscheme habamax
+
+" Everforest
+" let g:everforest_background = 'soft'  " hard, medium, soft
+" colorscheme everforest
+
+" Edge
+" let g:edge_style = 'aura'  " default, aura, neon
+" let g:edge_dim_foreground = 1
+" let g:edge_disable_terminal_colors = 1
+" colorscheme edge
+
+" Sonokai
+" let g:sonokai_style = 'maia'  " andromeda, atlantis, maia, shusia
+" colorscheme sonokai
+
 
 " Configure git merge conflict colors - :help syn-pattern
 function! ConflictsHighlight() abort
