@@ -13,8 +13,8 @@ Plug 'dense-analysis/ale'             " File linting
 Plug 'hashivim/vim-terraform'         " Terraform syntax highlighting
 Plug 'kshenoy/vim-signature'          " Place toggle and display Vim marks
 Plug 'sainnhe/edge'
-Plug 'sainnhe/everforest'
-Plug 'sainnhe/sonokai'
+" Plug 'sainnhe/everforest'
+" Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-commentary'           " Code commenting
 Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
@@ -37,6 +37,7 @@ colorscheme habamax
 " colorscheme everforest
 
 " Edge
+" set background=light
 " let g:edge_style = 'aura'  " default, aura, neon
 " let g:edge_dim_foreground = 1
 " let g:edge_disable_terminal_colors = 1
