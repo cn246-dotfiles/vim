@@ -152,6 +152,7 @@ let g:netrw_browse_split=4             " Open in same buffer as existing file
 let g:netrw_winsize=20                 " Set file tree at 20% of window width
 let ghregex='\(^\|\s\s\)\zs\.\S\+'     " Set files to hide by default
 let g:netrw_list_hide=ghregex          " Hide files by default
+let g:netrw_liststyle=3                " Set file list style
 
 "------------------------------------------------------------
 " File Searching
@@ -318,6 +319,7 @@ tnoremap <F6> <C-W>N
 
 " terminal in split window
 map <Leader>t :term ++close<cr>
+map <Leader>vt :vert term ++close<cr>
 
 " terminal in new tab
 map <Leader>T :tab term ++close<cr>
