@@ -20,6 +20,7 @@ Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
 Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
+Plug '~/.vim/plugged/vault-edit'      " Switch caching off when editing a pass entry
 "Plug 'mattn/emmet-vim'               " Expand code abbreviations
 call plug#end()
 
@@ -150,8 +151,7 @@ set statusline+=\                         " A space
 let g:netrw_banner=0                   " Don't show text at top of file tree
 let g:netrw_browse_split=4             " Open in same buffer as existing file
 let g:netrw_winsize=20                 " Set file tree at 20% of window width
-let ghregex='\(^\|\s\s\)\zs\.\S\+'     " Set files to hide by default
-let g:netrw_list_hide=ghregex          " Hide files by default
+let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+,__pycache__,.DS_Store,.idea,.git,.venv,node_modules,*\.o,*\.pyc,.*\.swp'
 let g:netrw_liststyle=3                " Set file list style
 
 "------------------------------------------------------------
@@ -319,10 +319,11 @@ tnoremap <F6> <C-W>N
 
 " terminal in split window
 map <Leader>t :term ++close<cr>
-map <Leader>vt :vert term ++close<cr>
+ map <Leader>T :vert term ++close<cr>
+" map <Leader>vt :vert term ++close<cr>
 
 " terminal in new tab
-map <Leader>T :tab term ++close<cr>
+map <Leader>tt :tab term ++close<cr>
 " map <Leader>T :tab term ++curwin ++close<cr>
 
 "------------------------------------------------------------
