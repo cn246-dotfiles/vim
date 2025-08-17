@@ -7,6 +7,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 " Use vim-plug for plugins.
 call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'             " File linting
@@ -20,8 +21,7 @@ Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
 Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
-Plug '~/.vim/plugged/vault-edit'      " Switch caching off when editing a pass entry
-"Plug 'mattn/emmet-vim'               " Expand code abbreviations
+" Plug 'mattn/emmet-vim'               " Expand code abbreviations
 call plug#end()
 
 " Enable matchit
@@ -159,7 +159,7 @@ let g:netrw_liststyle=3                " Set file list style
 " https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
 "------------------------------------------------------------
 if executable('rg')
-    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
+    set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --hidden
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
@@ -184,6 +184,12 @@ augroup END
 "------------------------------------------------------------
 " Set leader to spacebar
 let mapleader=" "
+
+" Typo fixes
+command! W w      " :W behaves like :w
+command! Q q      " :Q behaves like :q
+command! Wq wq    " :Wq behaves like :wq
+command! WQ wq
 
 " Source Vim config file.
 nnoremap <leader>sv :source $MYVIMRC<CR>
@@ -222,6 +228,8 @@ nnoremap <C-L> :nohl<CR><C-L>
 " Tab to cycle autocomplete selections
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : col('.') > 1 && getline('.')[col('.')-2] =~ '\k' ? "\<C-x>\<C-o>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
 
 " Use <F11> to toggle paste
 set pastetoggle=<F11>
@@ -333,16 +341,15 @@ if !isdirectory($HOME . "/.vim/cache")
   call mkdir($HOME . "/.vim/cache", "p", 0700)
 endif
 
-if !isdirectory($HOME . "/.vim/cache/backup")
-  call mkdir($HOME . "/.vim/cache/backup", "p", 0700)
-endif
-
-if !isdirectory($HOME . "/.vim/cache/swap")
-  call mkdir($HOME . "/.vim/cache/swap", "p", 0700)
-endif
+for d in ['backup', 'swap', 'vimundo']
+  if !isdirectory($HOME.'/.vim/cache/'.d)
+    call mkdir($HOME . '/.vim/cache/'.d, 'p', 0700)
+  endif
+endfor
 
 set dir=~/.vim/cache/swap//
 set backupdir=~/.vim/cache/backup//
+
 
 " set nobackup
 " set nowritebackup
@@ -361,9 +368,6 @@ function Tmpwatch(path, days)
 endfunction
 
 if exists("+undofile")
-    if !isdirectory($HOME . "/.vim/cache/vimundo")
-        call mkdir($HOME . "/.vim/cache/vimundo", "", 0700)
-    endif
     set undodir=~/.vim/cache/vimundo//
     set undofile
     set undolevels=1000
