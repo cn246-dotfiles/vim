@@ -327,8 +327,8 @@ tnoremap <F6> <C-W>N
 
 " terminal in split window
 map <Leader>t :term ++close<cr>
- map <Leader>T :vert term ++close<cr>
-" map <Leader>vt :vert term ++close<cr>
+map <Leader>vt :vert term ++close<cr>
+" map <Leader>T :vert term ++close<cr>
 
 " terminal in new tab
 map <Leader>tt :tab term ++close<cr>
