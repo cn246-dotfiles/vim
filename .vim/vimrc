@@ -14,12 +14,13 @@ Plug 'dense-analysis/ale'             " File linting
 Plug 'hashivim/vim-terraform'         " Terraform syntax highlighting
 Plug 'kshenoy/vim-signature'          " Place toggle and display Vim marks
 Plug 'sainnhe/edge'
-" Plug 'sainnhe/everforest'
+Plug 'sainnhe/everforest'
 " Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-commentary'           " Code commenting
 Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
+Plug 'stephpy/vim-yaml'
 Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
 " Plug 'mattn/emmet-vim'               " Expand code abbreviations
 call plug#end()
@@ -31,11 +32,28 @@ runtime macros/matchit.vim
 " Colorscheme
 "------------------------------------------------------------
 " Habamax
-colorscheme habamax
+" colorscheme habamax
 
 " Everforest
-" let g:everforest_background = 'soft'  " hard, medium, soft
-" colorscheme everforest
+if has('termguicolors')
+  set termguicolors
+endif
+
+" For dark version.
+set background=dark
+
+" For light version.
+" set background=light
+
+" Set contrast.
+" This configuration option should be placed before `colorscheme everforest`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'hard'
+
+" For better performance
+let g:everforest_better_performance = 1
+
+colorscheme everforest
 
 " Edge
 " set background=light
@@ -326,13 +344,12 @@ nmap <F6> :tab :term ++close<CR>
 tnoremap <F6> <C-W>N
 
 " terminal in split window
-map <Leader>t :term ++close<cr>
-map <Leader>vt :vert term ++close<cr>
-" map <Leader>T :vert term ++close<cr>
+map <leader>t :term ++close<cr>
+map <leader>T :vert term ++close<cr>
 
 " terminal in new tab
-map <Leader>tt :tab term ++close<cr>
-" map <Leader>T :tab term ++curwin ++close<cr>
+" map <leader>tt :tab term ++close<cr>
+" map <leader>T :tab term ++curwin ++close<cr>
 
 "------------------------------------------------------------
 " Undo
