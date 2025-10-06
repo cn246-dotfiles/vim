@@ -20,7 +20,6 @@ Plug 'tpope/vim-commentary'           " Code commenting
 Plug 'tpope/vim-fugitive'             " Git integration
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
-Plug 'stephpy/vim-yaml'
 Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
 " Plug 'mattn/emmet-vim'               " Expand code abbreviations
 call plug#end()
@@ -46,7 +45,6 @@ set background=dark
 " set background=light
 
 " Set contrast.
-" This configuration option should be placed before `colorscheme everforest`.
 " Available values: 'hard', 'medium'(default), 'soft'
 let g:everforest_background = 'hard'
 
