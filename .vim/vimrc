@@ -27,9 +27,6 @@ Plug 'hashivim/vim-terraform'         " Terraform filetype/syntax
 Plug 'sainnhe/everforest'
 " Plug 'sainnhe/sonokai'
 
-" Security
-Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
-
 call plug#end()
 
 " Enable matchit (improves % matching for some filetypes)
@@ -45,12 +42,6 @@ endif
 
 set background=dark                       " Available values: 'dark', 'light'
 
-" Edge
-" let g:edge_style = 'aura'                 " Available values: 'default', 'aura', 'neon'
-" let g:edge_dim_foreground = 1
-" let g:edge_disable_terminal_colors = 1
-" colorscheme edge
-
 " Everforest
 let g:everforest_background = 'hard'     " Available values: 'hard', 'medium', 'soft'
 let g:everforest_better_performance = 1  " Available values: 0, 1
@@ -58,10 +49,6 @@ colorscheme everforest
 
 " Habamax
 " colorscheme habamax
-
-" Sonokai
-" let g:sonokai_style = 'maia'             " Available values: 'andromeda', 'atlantis', 'maia', 'shusia'
-" colorscheme sonokai
 
 " Git merge conflict colors - :help syn-pattern
 function! ConflictsHighlight() abort
@@ -290,6 +277,46 @@ endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
 
+" ---------------------------------------------------------------------------
+" pass(1) secure editing
+" ---------------------------------------------------------------------------
+function! s:is_pass_tempfile(path) abort
+  " Resolve symlinks, normalize
+  let l:real = resolve(a:path)
+
+  " Match macOS or Linux style temp files created by pass
+  return l:real =~# '/\v(pass\.[^/]+/[^/]+\.txt)$'
+endfunction
+
+" Apply 'sterile' settings to this buffer
+function! s:apply_pass_security() abort
+  setlocal filetype=PASS
+
+  " Prevent any disk traces
+  setlocal noswapfile
+  setlocal nobackup
+  setlocal nowritebackup
+  setlocal noundofile
+  setlocal viminfo=
+  if exists('+shada')
+    setlocal shada=
+  endif
+
+  " Disable spell, conceal, etc. for clarity
+  setlocal nospell
+  setlocal conceallevel=0
+
+  " Mark buffer as a pass buffer
+  let b:pass_editing = 1
+endfunction
+
+" Auto-detect pass buffers on read or new file
+augroup redact_pass
+  autocmd!
+  autocmd BufReadPost,BufNewFile * if s:is_pass_tempfile(expand('<afile>:p')) | call s:apply_pass_security() | endif
+augroup END
+
+
 "------------------------------------------------------------
 " Pastebins
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
@@ -442,11 +469,11 @@ function! HighlightTrailingWS()
   endif
 
   " Choose pattern based on mode:
-  " Insert: avoid highlighting under cursor
-  " Normal: highlight all trailing space
   if mode() ==# 'i'
+    " Insert: avoid highlighting under cursor
     let g:trailing_ws_id = matchadd('ExtraWhitespace', '\%#\@<!\s\+$')
   else
+    " Normal: highlight all trailing space
     let g:trailing_ws_id = matchadd('ExtraWhitespace', '\s\+$')
   endif
 endfunction
