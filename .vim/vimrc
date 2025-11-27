@@ -224,7 +224,7 @@ nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 
 " File browser
-nnoremap <leader>pv :Lexplore<CR>
+nnoremap <leader>pv :vertical Lexplore<CR>
 
 " Buffers
 nnoremap gb :ls<CR>:buffer<Space>
@@ -458,14 +458,14 @@ let g:trailing_ws_id = -1
 
 function! HighlightTrailingWS()
   " Skip special buffers where trailing space is intentional
-  if &buftype ==# 'help'
+  if &buftype != '' || &filetype ==# 'help' || &filetype ==# 'gitcommit'
     return
   endif
 
   " Clear existing match, if any
   if g:trailing_ws_id != -1
-    " silent! call matchdelete(g:trailing_ws_id)
-    call matchdelete(g:trailing_ws_id)
+    silent! call matchdelete(g:trailing_ws_id)
+    let g:trailing_ws_id = -1
   endif
 
   " Choose pattern based on mode:
@@ -480,6 +480,7 @@ endfunction
 
 augroup showTrailingWS
   autocmd!
+  " Update highlighting when entering/leaving insert mode or buffer
   autocmd InsertEnter,InsertLeave * call HighlightTrailingWS()
   autocmd BufEnter * call HighlightTrailingWS()
   autocmd ColorScheme * call HighlightTrailingWS()  " survive theme changes
