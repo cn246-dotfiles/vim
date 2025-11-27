@@ -7,65 +7,63 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
-" Use vim-plug for plugins.
 call plug#begin('~/.vim/plugged')
-Plug 'dense-analysis/ale'             " File linting
-Plug 'hashivim/vim-terraform'         " Terraform syntax highlighting
-Plug 'kshenoy/vim-signature'          " Place toggle and display Vim marks
-Plug 'sainnhe/edge'
-Plug 'sainnhe/everforest'
-" Plug 'sainnhe/sonokai'
-Plug 'tpope/vim-commentary'           " Code commenting
-Plug 'tpope/vim-fugitive'             " Git integration
+
+" Core plugins
+Plug 'dense-analysis/ale'             " ALE: async linting and fixers
+Plug 'kshenoy/vim-signature'          " Marks/sign column helper
+" Plug 'mattn/emmet-vim'               " HTML/CSS abbreviation expansion
+Plug 'tpope/vim-commentary'           " Easy commenting (gc)
+Plug 'tpope/vim-fugitive'             " Git integration (:G status, etc.)
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
+
+" Filetypes
+Plug 'hashivim/vim-terraform'         " Terraform filetype/syntax
+" Plug 'stephpy/vim-yaml'             " YAML improvements
+
+" Aesthetics
+" Plug 'sainnhe/edge'
+Plug 'sainnhe/everforest'
+" Plug 'sainnhe/sonokai'
+
+" Security
 Plug '~/.vim/plugged/vim-redact-pass' " Switch caching off when editing a pass entry
-" Plug 'mattn/emmet-vim'               " Expand code abbreviations
+
 call plug#end()
 
-" Enable matchit
+" Enable matchit (improves % matching for some filetypes)
 runtime macros/matchit.vim
 
-"------------------------------------------------------------
-" Colorscheme
-"------------------------------------------------------------
-" Habamax
-" colorscheme habamax
 
-" Everforest
+"------------------------------------------------------------
+" Theming
+"------------------------------------------------------------
 if has('termguicolors')
-  set termguicolors
+  set termguicolors                       " Use 24-bit color
 endif
 
-" For dark version.
-set background=dark
-
-" For light version.
-" set background=light
-
-" Set contrast.
-" Available values: 'hard', 'medium'(default), 'soft'
-let g:everforest_background = 'hard'
-
-" For better performance
-let g:everforest_better_performance = 1
-
-colorscheme everforest
+set background=dark                       " Available values: 'dark', 'light'
 
 " Edge
-" set background=light
-" let g:edge_style = 'aura'  " default, aura, neon
+" let g:edge_style = 'aura'                 " Available values: 'default', 'aura', 'neon'
 " let g:edge_dim_foreground = 1
 " let g:edge_disable_terminal_colors = 1
 " colorscheme edge
 
+" Everforest
+let g:everforest_background = 'hard'     " Available values: 'hard', 'medium', 'soft'
+let g:everforest_better_performance = 1  " Available values: 0, 1
+colorscheme everforest
+
+" Habamax
+" colorscheme habamax
+
 " Sonokai
-" let g:sonokai_style = 'maia'  " andromeda, atlantis, maia, shusia
+" let g:sonokai_style = 'maia'             " Available values: 'andromeda', 'atlantis', 'maia', 'shusia'
 " colorscheme sonokai
 
-
-" Configure git merge conflict colors - :help syn-pattern
+" Git merge conflict colors - :help syn-pattern
 function! ConflictsHighlight() abort
     syntax match conflictMarker "^\(<<<<<<<.*\||||||||.*\|>>>>>>>.*\|=======\)$"
     highlight conflictMarker ctermfg=208
@@ -76,18 +74,21 @@ augroup conflictColors
     autocmd BufEnter * call ConflictsHighlight()
 augroup END
 
+
 "------------------------------------------------------------
 " General
 "------------------------------------------------------------
 filetype indent plugin on              " Guess filetype based on name & contents
-set autoindent                         " Keep same indent as the line you're on
+syntax on                              " Enable syntax highlighting
+
+set encoding=utf8                      " Set utf8 as standard encoding
+set autoindent                         " Copy indent from current line on new line
 set backspace=indent,eol,start         " Backspace over indent, eol and start
 set complete+=kspell                   " Set matches for completion
-" set completeopt=menuone,noinsert       " Options for completion
 set completeopt=menuone                " Options for completion
+" set completeopt=menuone,noinsert       " Options for completion
 set confirm                            " Ask to save changed files
 set dictionary+=/usr/share/dict/words  " Set dictionary file location
-set encoding=utf8                      " Set utf8 as standard encoding
 set expandtab                          " Use spaces instead of tabs
 set ffs=unix,dos,mac                   " Set Unix as standard file type
 set hidden                             " Switch buffers without saving first
@@ -96,20 +97,24 @@ set ignorecase                         " Use case insensitive search
 set incsearch                          " Highlight as you type a search term
 set mouse=a                            " Enable use of the mouse for all modes
 set nospell                            " Disable spellcheck
-set nostartofline                      " Stop going to first character of line
-set notimeout ttimeout ttimeoutlen=200 " Time out on keycodes, but not mappings
+set nostartofline                      " Keep cursor column when jumping to buffer
+set notimeout                          " Do not time out mapped sequences
+set ttimeout                           " Time out keycodes, not mappings
+set ttimeoutlen=200                    " Milliseconds to wait for keycodes
 set omnifunc=syntaxcomplete#Complete   " Enable Omni Completion
+set path=.,**                          " Search current dir and recursively for :find
 set previewheight=25                   " Bigger preview window (eg. ALEInfo)
-set shiftwidth=2                       " Set column number for indentation
-set shortmess+=c                       " Avoid some error messages
-set smartcase                          " Except when using capital letters
-set softtabstop=2                      " Use 2 spaces instead of tabs
+set shiftwidth=2                       " Indent width for >> << and autoindent
+set shortmess+=c                       " Compact messages (avoid ins-completion-menu messages)
+set signcolumn=yes                     " Keep sign column always visible to prevent text shifting
+set smartcase                          " If query has uppercase, search becomes case-sensitive
+set softtabstop=2                      " Number of spaces TAB acts like in insert mode
 set spelllang=en_us                    " Set spellcheck to en_us
-set splitbelow                         " Send splits to bottom
-set splitright                         " Send splits to right
+set splitbelow                         " New horizontal splits go below current window
+set splitright                         " New vertical splits go right of current window
 set t_vb=                              " Neither flash nor beep
 set visualbell                         " Visual bell instead of beeping
-syntax on                              " Enable syntax highlighting
+
 
 "------------------------------------------------------------
 " Visual Helpers
@@ -128,20 +133,24 @@ set showcmd                            " Show commands in last line of screen
 set wildmenu                           " Better command-line completion
 set wildmode=longest:full,full         " Completion mode
 
+
 "------------------------------------------------------------
 " Folding
 "------------------------------------------------------------
-set foldcolumn=2                       " Show folds in sidebar
 set foldmethod=indent                  " Set fold method to indent
 set nofoldenable                       " Don't fold initially
+set foldcolumn=2                       " Show folds in sidebar
 
 " Set manual folding from indent mode when attempting to define a fold with zf
-nnoremap <expr> zf
-    \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zf' : 'zf'
+nnoremap <expr> zf (&foldmethod == 'indent'
+      \ ? '<cmd>setlocal foldmethod=manual<CR>zf'
+      \ : 'zf')
 
 " Set manual folding from indent mode when attempting to delete a fold with zd
-nnoremap <expr> zd
-    \ &foldmethod == 'indent' ? '<cmd>setlocal foldmethod=manual<CR>zd' : 'zd'
+nnoremap <expr> zd (&foldmethod == 'indent'
+      \ ? '<cmd>setlocal foldmethod=manual<CR>zd'
+      \ : 'zd')
+
 
 "------------------------------------------------------------
 " Statusline
@@ -161,25 +170,29 @@ set statusline+=\                         " A space
 set statusline+=%p%%                      " Position in percentage
 set statusline+=\                         " A space
 
+
 "------------------------------------------------------------
 " File Browsing
 "------------------------------------------------------------
 let g:netrw_banner=0                   " Don't show text at top of file tree
 let g:netrw_browse_split=4             " Open in same buffer as existing file
 let g:netrw_winsize=20                 " Set file tree at 20% of window width
-let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+,__pycache__,.DS_Store,.idea,.git,.venv,node_modules,*\.o,*\.pyc,.*\.swp'
 let g:netrw_liststyle=3                " Set file list style
+let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+,__pycache__,.DS_Store,.idea,.git,.venv,node_modules,*\.o,*\.pyc,.*\.swp'
+
 
 "------------------------------------------------------------
 " File Searching
 " https://gist.github.com/romainl/56f0c28ef953ffc157f36cc495947ab3
 "------------------------------------------------------------
 if executable('rg')
+    " Use ripgrep for :grep with vimgrep-style output and hidden files
     set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --hidden
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
 function! Grep(...)
+    " Run grepprg with given args and return the shell output
     return system(join([&grepprg] + [expandcmd(join(a:000, ' '))], ' '))
 endfunction
 
@@ -195,19 +208,20 @@ augroup quickfix
     autocmd QuickFixCmdPost lgetexpr lwindow
 augroup END
 
+
 "------------------------------------------------------------
 " Mappings
 "------------------------------------------------------------
 " Set leader to spacebar
 let mapleader=" "
 
-" Typo fixes
-command! W w      " :W behaves like :w
-command! Q q      " :Q behaves like :q
-command! Wq wq    " :Wq behaves like :wq
+" Typo fixes: :W, :Q, :Wq, :WQ behave as common commands
+command! W w
+command! Q q
+command! Wq wq
 command! WQ wq
 
-" Source Vim config file.
+" Source Vim config file
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " Move between splits with <space>+[h,j,k,l]
@@ -216,22 +230,21 @@ nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 
-" Copy/paste
+" System clipboard
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>p "+p
 vnoremap <leader>p "+p
 
-" Open file browser with <space>+pv
+" File browser
 nnoremap <leader>pv :Lexplore<CR>
 
 " Buffers
 nnoremap gb :ls<CR>:buffer<Space>
 nnoremap <leader>b :buffer *
 
-" Find
-set path=.,**
-:nnoremap <leader>f :find *
+" Find (note: expansion via 'path')
+nnoremap <leader>f :find *
 
 " Tab navigaton
 " TODO: this cycles through actual terminal tabs, not vim tabs.
@@ -242,13 +255,14 @@ set path=.,**
 nnoremap <C-L> :nohl<CR><C-L>
 
 " Tab to cycle autocomplete selections
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : col('.') > 1 && getline('.')[col('.')-2] =~ '\k' ? "\<C-x>\<C-o>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
+inoremap <expr> <TAB> pumvisible() ? '<C-n>' : '<TAB>'
+inoremap <expr> <S-TAB> pumvisible() ? '<C-p>' : '<TAB>'
+" inoremap <expr> <Tab> pumvisible() ? '<C-n>' : col('.') > 1 && getline('.')[col('.')-2] =~ '\k' ? '<C-x><C-o>' : '<Tab>'
+" inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<Tab>'
 
 " Use <F11> to toggle paste
 set pastetoggle=<F11>
+
 
 "------------------------------------------------------------
 " ALE
@@ -256,12 +270,9 @@ set pastetoggle=<F11>
 " Navigate ALE errors
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Run :ALEFix
 nnoremap <leader>af :ALEFix<CR>
+nnoremap <leader>at :ALEToggle<CR>
 
-" Toggle ALE
-map <leader>at :ALEToggle<CR>
 
 "------------------------------------------------------------
 " Modeline
@@ -278,25 +289,25 @@ endfunction
 
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
+
 "------------------------------------------------------------
 " Pastebins
 " https://gist.github.com/romainl/1cad2606f7b00088dda3bb511af50d53
 "------------------------------------------------------------
 if has('linux')
-    " Sometimes vpaste only copies "Spam check..."
+    " Sometimes vpaste only copies 'Spam check...'
     command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
         \| tr -d '\n' | xclip -i -selection clipboard
     command! -range=% PP <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
         \| tr -d '\n' | xclip -i -selection clipboard
 elseif has('osx')
-    " Sometimes vpaste only copies "Spam check..."
+    " Sometimes vpaste only copies 'Spam check...'
     command! -range=% VP <line1>,<line2>w !curl -F 'text=<-' http://vpaste.net
         \| tr -d '\n' | pbcopy
     command! -range=% PP <line1>,<line2>w !curl -F 'file=@-;' https://envs.sh
         \| tr -d '\n' | pbcopy
 endif
 
-map vp :exec "w !
 
 "------------------------------------------------------------
 " Registers
@@ -310,6 +321,7 @@ function! ClearRegs() abort
 endfunction
 
 command! Cleareg call ClearRegs()
+
 
 "------------------------------------------------------------
 " Spellcheck
@@ -326,8 +338,9 @@ endfunction
 
 command! SpellUpdate call SpellUpdate()
 
+
 "------------------------------------------------------------
-" Sudo
+" Sudo write
 "------------------------------------------------------------
 function! Sudow()
     :w !sudo tee % > /dev/null
@@ -335,40 +348,43 @@ endfunction
 
 command! Sudow call Sudow()
 
+
 "------------------------------------------------------------
 " Terminal
 "------------------------------------------------------------
-nmap <F6> :tab :term ++close<CR>
+nmap <F6> :tabnew :term ++close<CR>
 tnoremap <F6> <C-W>N
 
-" terminal in split window
-map <leader>t :term ++close<cr>
-map <leader>T :vert term ++close<cr>
+nnoremap <leader>t :term ++close<cr>
+nnoremap <leader>T :vert term ++close<cr>
 
 " terminal in new tab
 " map <leader>tt :tab term ++close<cr>
 " map <leader>T :tab term ++curwin ++close<cr>
 
-"------------------------------------------------------------
-" Undo
-"------------------------------------------------------------
-if !isdirectory($HOME . "/.vim/cache")
-  call mkdir($HOME . "/.vim/cache", "p", 0700)
-endif
 
-for d in ['backup', 'swap', 'vimundo']
-  if !isdirectory($HOME.'/.vim/cache/'.d)
-    call mkdir($HOME . '/.vim/cache/'.d, 'p', 0700)
+"------------------------------------------------------------
+" Undo / Backup / Swap
+"------------------------------------------------------------
+let s:vim_home = expand('~/.vim')
+let s:cache_dir = s:vim_home . '/cache'
+let s:backup_dir = s:cache_dir . '/backup'
+let s:swap_dir = s:cache_dir . '/swap'
+let s:undo_dir = s:cache_dir . '/vimundo'
+
+let s:vim_dirs = [s:cache_dir, s:backup_dir, s:swap_dir, s:undo_dir]
+for s:dir in s:vim_dirs
+  if !isdirectory(s:dir)
+    call mkdir(s:dir, 'p', 0700)
   endif
 endfor
 
 set dir=~/.vim/cache/swap//
 set backupdir=~/.vim/cache/backup//
 
-
 " set nobackup
 " set nowritebackup
-
+"
 function Tmpwatch(path, days)
     let l:path = expand(a:path)
     if isdirectory(l:path)
@@ -387,13 +403,12 @@ if exists("+undofile")
     set undofile
     set undolevels=1000
     set undoreload=10000
-
-    " remove undo files which have not been modified for 31 days
-    call Tmpwatch(&undodir, 31)
+    call Tmpwatch(&undodir, 31) " Delete undo files which haven't been modified for 31 days
 endif
 
+
 "------------------------------------------------------------
-" Viminfo file
+" Viminfo
 "------------------------------------------------------------
 set viminfo=%,'100,/50,:100,<500,h,n~/.vim/cache/viminfo
 "           | |    |    |   |    | + viminfo file path
@@ -404,24 +419,53 @@ set viminfo=%,'100,/50,:100,<500,h,n~/.vim/cache/viminfo
 "           | + save file marks
 "           + save/restore buffer list
 
+
 "------------------------------------------------------------
 " Whitespace
 "------------------------------------------------------------
 " Flag unnecessary whitespace
-highlight BadWhitespace ctermbg=1 ctermfg=0
-match BadWhitespace /\s\+$/
-autocmd BufWinEnter * match BadWhitespace /\s\+$/
-autocmd InsertEnter * match BadWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match BadWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+highlight ExtraWhitespace ctermbg=1 ctermfg=0
 
-" Clean up whitespace
+" Track match ID so we can delete/refresh it cleanly
+let g:trailing_ws_id = -1
+
+function! HighlightTrailingWS()
+  " Skip special buffers where trailing space is intentional
+  if &buftype ==# 'help'
+    return
+  endif
+
+  " Clear existing match, if any
+  if g:trailing_ws_id != -1
+    " silent! call matchdelete(g:trailing_ws_id)
+    call matchdelete(g:trailing_ws_id)
+  endif
+
+  " Choose pattern based on mode:
+  " Insert: avoid highlighting under cursor
+  " Normal: highlight all trailing space
+  if mode() ==# 'i'
+    let g:trailing_ws_id = matchadd('ExtraWhitespace', '\%#\@<!\s\+$')
+  else
+    let g:trailing_ws_id = matchadd('ExtraWhitespace', '\s\+$')
+  endif
+endfunction
+
+augroup showTrailingWS
+  autocmd!
+  autocmd InsertEnter,InsertLeave * call HighlightTrailingWS()
+  autocmd BufEnter * call HighlightTrailingWS()
+  autocmd ColorScheme * call HighlightTrailingWS()  " survive theme changes
+augroup END
+
+" Remove trailing whitespace without moving the cursor
 function! TrimWhitespace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfunction
 
+" Trigger whitespace cleanup
 noremap <leader>w :call TrimWhitespace()<CR>
 
 " vim: set ft=vim ts=2 sts=2 sw=2 nosr et
