@@ -82,7 +82,7 @@ set hidden                             " Switch buffers without saving first
 set hlsearch                           " Highlight searches
 set ignorecase                         " Use case insensitive search
 set incsearch                          " Highlight as you type a search term
-set mouse=a                            " Enable use of the mouse for all modes
+" set mouse=a                            " Enable use of the mouse for all modes
 set nospell                            " Disable spellcheck
 set nostartofline                      " Keep cursor column when jumping to buffer
 set notimeout                          " Do not time out mapped sequences
@@ -166,6 +166,12 @@ let g:netrw_browse_split=4             " Open in same buffer as existing file
 let g:netrw_winsize=20                 " Set file tree at 20% of window width
 let g:netrw_liststyle=3                " Set file list style
 let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+,__pycache__,.DS_Store,.idea,.git,.venv,node_modules,*\.o,*\.pyc,.*\.swp'
+
+let g:netrw_preview = 0                " Avoid preview windows altogether
+let g:netrw_browse_split = 0           " Replace netrw with chosen file (no tiny preview window)
+
+let g:netrw_altv = 1                   " Make vertical splits always open on the right
+let g:netrw_keepdir = 0                " Let netrw cd into directories normally instead of forcing the cwd to stay fixed
 
 
 "------------------------------------------------------------
