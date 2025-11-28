@@ -1,5 +1,5 @@
 if has_key(g:plugs, "ale")
-  " Enable ale fixers on save
+  " Fix on save
   let g:ale_fix_on_save = 0
 
   " Fixers to use when calling ALEFix
@@ -24,9 +24,12 @@ if has_key(g:plugs, "ale")
   let g:ale_linters = {
   \   'ansible': ['ansible_lint'],
   \   'cloudformation': ['cloudformation'],
+  \   'dockerfile': ['hadolint'],
+  \   'jinja': ['j2lint'],
   \   'json': ['jq'],
-  \   'python': ['pylint', 'ruff'],
+  \   'python': ['ruff'],
   \   'sh': ['shellcheck'],
+  \   'terraform': ['tflint'],
   \   'yaml': ['yamllint', 'yq']
   \}
 
@@ -38,6 +41,9 @@ if has_key(g:plugs, "ale")
   let g:ale_python_pylint_auto_uv = 1
   let g:ale_python_ruff_auto_uv = 1
   let g:ale_python_auto_virtualenv = 1
+
+  let g:ale_jinja_j2lint_auto_uv = 1
+  let g:ale_jinja_j2lint_options ='--ignore jinja-statements-indentation single-statement-per-line --'
 
 endif
 
