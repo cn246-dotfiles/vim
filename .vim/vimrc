@@ -508,4 +508,4 @@ endfunction
 " Trigger whitespace cleanup
 noremap <leader>w :call TrimWhitespace()<CR>
 
-" vim: set ft=vim ts=2 sts=2 sw=2 nosr et
+" vim: ft=vim ts=2 sts=2 sw=2 nosr et
