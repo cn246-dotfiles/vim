@@ -201,6 +201,12 @@ augroup quickfix
     autocmd QuickFixCmdPost lgetexpr lwindow
 augroup END
 
+" Auto-open location list after LGrep
+autocmd QuickFixCmdPost lgrep,lgrepadd,lmake nested lwindow
+
+" Auto-close the list when selecting an entry
+autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
+
 
 "------------------------------------------------------------
 " Mappings
