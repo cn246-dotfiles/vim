@@ -72,8 +72,7 @@ set encoding=utf8                      " Set utf8 as standard encoding
 set autoindent                         " Copy indent from current line on new line
 set backspace=indent,eol,start         " Backspace over indent, eol and start
 set complete+=kspell                   " Set matches for completion
-set completeopt=menuone                " Options for completion
-" set completeopt=menuone,noinsert       " Options for completion
+set completeopt=menuone,noselect       " Options for completion
 set confirm                            " Ask to save changed files
 set dictionary+=/usr/share/dict/words  " Set dictionary file location
 set expandtab                          " Use spaces instead of tabs
@@ -110,8 +109,13 @@ set cmdheight=2                        " Set command window height to 2 lines
 set colorcolumn=80                     " Highlight column 80
 set cursorline                         " Highlight current line
 set laststatus=2                       " Always display the status line
-set list                               " Mark whitespace and tabs, etc.
-set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set list                               " Enable marking whitespace, tabs, etc.
+set listchars=tab:»\                   " Mark tabs
+set listchars+=extends:›               " Set last column mark
+set listchars+=precedes:‹              " Set first column mark
+set listchars+=nbsp:·                  " Set non breakable space mark
+set listchars+=lead:.                  " Set leading whitespace mark
+set listchars+=trail:·                 " Set trailing whitespace mark
 set modeline                           " Set filetype and indentation via comment
 set modelines=3                        " Look for modeline in bottom 3 lines
 set relativenumber                     " line numbers counting away from cursor
@@ -119,6 +123,23 @@ set ruler                              " Cursor position in the status line
 set showcmd                            " Show commands in last line of screen
 set wildmenu                           " Better command-line completion
 set wildmode=longest:full,full         " Completion mode
+
+
+"------------------------------------------------------------
+" Diff
+"------------------------------------------------------------
+set diffopt=closeoff                   " Disable diff when one window is remaining
+set diffopt+=filler                    " Insert filler lines to keep text visually aligned
+set diffopt+=inline:char               " Character-by-character diff within each diff block
+set diffopt+=linematch:80              " Allow matching similar lines to each other
+set diffopt+=vertical                  " Ensure diffs open in a vertical split
+
+" https://github.com/agude/dotfiles/issues/2#issuecomment-843639956
+if !(has('mac') && $VIM == '/usr/share/vim') && has('patch-8.2.0000')
+    set diffopt+=indent-heuristic      " Prefer diff matches that respect code structure
+    set diffopt+=internal              " Use Vim’s internal diff engine
+    set diffopt+=algorithm:histogram   " Set diff algorithm
+endif
 
 
 "------------------------------------------------------------
