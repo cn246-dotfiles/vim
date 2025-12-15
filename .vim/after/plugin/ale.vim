@@ -30,6 +30,7 @@ if has_key(g:plugs, "ale")
   \   'python': ['ruff'],
   \   'sh': ['shellcheck'],
   \   'terraform': ['tflint'],
+  \   'typescript': [],
   \   'yaml': ['yamllint', 'yq']
   \}
 
