@@ -17,6 +17,7 @@ Plug 'tpope/vim-commentary'           " Easy commenting (gc)
 Plug 'tpope/vim-fugitive'             " Git integration (:G status, etc.)
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
+Plug 'junegunn/fzf.vim'
 
 " Filetypes
 Plug 'hashivim/vim-terraform'         " Terraform filetype/syntax
@@ -31,6 +32,19 @@ call plug#end()
 
 " Enable matchit (improves % matching for some filetypes)
 runtime macros/matchit.vim
+
+
+"------------------------------------------------------------
+" FZF
+"------------------------------------------------------------
+if executable('fzf')
+  set rtp+=/opt/homebrew/opt/fzf
+  if exists('$TMUX')
+    let g:fzf_layout = { 'tmux': '90%,70%' }
+  else
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+  endif
+endif
 
 
 "------------------------------------------------------------
@@ -188,9 +202,10 @@ let g:netrw_winsize=20                 " Set file tree at 20% of window width
 let g:netrw_liststyle=3                " Set file list style
 let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+,__pycache__,.DS_Store,.idea,.git,.venv,node_modules,*\.o,*\.pyc,.*\.swp'
 
-let g:netrw_preview = 0                " Avoid preview windows altogether
+let g:netrw_preview = 0                " Horizontal or Vertical preview window
 let g:netrw_browse_split = 0           " Replace netrw with chosen file (no tiny preview window)
 
+let g:netrw_alto = 1                   " Split position
 let g:netrw_altv = 1                   " Make vertical splits always open on the right
 let g:netrw_keepdir = 0                " Let netrw cd into directories normally instead of forcing the cwd to stay fixed
 
