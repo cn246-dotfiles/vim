@@ -11,13 +11,14 @@ call plug#begin('~/.vim/plugged')
 
 " Core plugins
 Plug 'dense-analysis/ale'             " ALE: async linting and fixers
+Plug 'junegunn/fzf'                   " Fuzzy finder binary and installer helper
+Plug 'junegunn/fzf.vim'               " Vim integration for fzf
 Plug 'kshenoy/vim-signature'          " Marks/sign column helper
 " Plug 'mattn/emmet-vim'               " HTML/CSS abbreviation expansion
 Plug 'tpope/vim-commentary'           " Easy commenting (gc)
 Plug 'tpope/vim-fugitive'             " Git integration (:G status, etc.)
 Plug 'tpope/vim-repeat'               " Repeat vim motions with .
 Plug 'tpope/vim-surround'             " Wrap words,etc with quotes or brackets
-Plug 'junegunn/fzf.vim'
 
 " Filetypes
 Plug 'hashivim/vim-terraform'         " Terraform filetype/syntax
@@ -38,7 +39,6 @@ runtime macros/matchit.vim
 " FZF
 "------------------------------------------------------------
 if executable('fzf')
-  set rtp+=/opt/homebrew/opt/fzf
   if exists('$TMUX')
     let g:fzf_layout = { 'tmux': '90%,70%' }
   else
