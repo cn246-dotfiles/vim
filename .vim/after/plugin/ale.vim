@@ -27,7 +27,7 @@ if has_key(g:plugs, "ale")
   \   'dockerfile': ['hadolint'],
   \   'jinja': ['j2lint'],
   \   'json': ['jq'],
-  \   'python': ['ruff'],
+  \   'python': ['ruff', 'ty'],
   \   'sh': ['shellcheck'],
   \   'terraform': ['tflint'],
   \   'typescript': [],
@@ -42,6 +42,9 @@ if has_key(g:plugs, "ale")
   let g:ale_python_pylint_auto_uv = 1
   let g:ale_python_ruff_auto_uv = 1
   let g:ale_python_auto_virtualenv = 1
+
+  let g:ale_python_ty_auto_uv = 1
+  let g:ale_python_ty_use_global = 1
 
   let g:ale_jinja_j2lint_auto_uv = 1
   let g:ale_jinja_j2lint_options ='--ignore jinja-statements-indentation single-statement-per-line --'
